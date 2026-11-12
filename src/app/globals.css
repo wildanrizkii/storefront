@@ -26,6 +26,7 @@
     background-color: var(--color-cream);
     color: var(--color-charcoal-main);
     scroll-behavior: smooth;
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -34,6 +35,14 @@
     color: var(--color-charcoal-main);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  /* Prevent Radix Select / modal scroll lock from hiding scrollbar or causing layout shift */
+  body[data-scroll-locked] {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    margin-right: 0px !important;
+    padding-right: 0px !important;
   }
 
   /* R-39: Every enabled interactive control displays pointer cursor */
@@ -62,6 +71,35 @@
     outline: 2px solid var(--color-charcoal-main);
     outline-offset: 2px;
   }
+
+  /* Cross-browser standard scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-badge-sand) transparent;
+  }
+}
+
+/* Custom minimal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-badge-sand);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5C4426;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 .font-serif-display {

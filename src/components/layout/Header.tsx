@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import { useStorefront } from "../../context/StorefrontContext";
 import { Navigation } from "../navigation/Navigation";
 import { CartDrawer } from "./CartDrawer";
@@ -79,7 +80,7 @@ export function Header() {
         className="w-full bg-[#FAF8F4] sticky top-0 z-40"
         data-purpose="site-navigation-header"
       >
-        <div className="max-w-350 mx-auto px-4 md:px-6 lg:px-12 h-16 md:h-20 flex items-center justify-between gap-4">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 h-16 md:h-20 flex items-center justify-between gap-4">
           {/* Mobile Left Hamburger Menu Trigger */}
           <div className="flex items-center md:hidden">
             <button
@@ -247,64 +248,75 @@ export function Header() {
           </div>
         </div>
 
-        {/* Expandable Search Bar */}
-        {searchOpen && (
-          <div className="border-t border-[#ECE7DE] bg-[#FAF8F4] px-4 md:px-6 lg:px-12 py-3.5">
-            <form
-              onSubmit={handleSearchSubmit}
-              className="max-w-350 mx-auto flex flex-col sm:flex-row sm:items-center gap-3"
+        {/* Expandable Search Bar with smooth transition */}
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.div
+              key="catalog-search-bar"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden border-t border-[#ECE7DE] bg-[#FAF8F4]"
             >
-              <label
-                htmlFor="catalog-search-input"
-                className="text-xs font-medium text-[#161412] shrink-0"
-              >
-                Search catalogue:
-              </label>
-              <div className="relative grow flex items-center gap-2">
-                <Input
-                  id="catalog-search-input"
-                  ref={searchInputRef}
-                  type="search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search by piece name, room, or material (e.g., Oak, Linen, Lamp)..."
-                  className="w-full h-9 rounded-full bg-white px-4 text-xs placeholder:text-[#6B655D]"
-                />
-                {searchQuery && (
-                  <button
-                    type="button"
-                    onClick={() => setSearchQuery("")}
-                    className="px-3 py-1.5 text-xs text-[#6B655D] hover:text-[#161412] rounded-full"
+              <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 py-3.5">
+                <form
+                  onSubmit={handleSearchSubmit}
+                  className="w-full flex flex-col sm:flex-row sm:items-center gap-3"
+                >
+                  <label
+                    htmlFor="catalog-search-input"
+                    className="text-xs font-medium text-[#161412] shrink-0"
                   >
-                    Clear
-                  </button>
-                )}
-                {pathname !== "/shop" && (
-                  <Button
-                    type="submit"
-                    size="sm"
-                    className="h-9 px-4 rounded-full text-xs font-medium shrink-0"
-                  >
-                    Search
-                  </Button>
-                )}
+                    Search catalogue:
+                  </label>
+                  <div className="relative grow flex items-center gap-2 min-w-0">
+                    <Input
+                      id="catalog-search-input"
+                      ref={searchInputRef}
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search by piece name, room, or material (e.g., Oak, Linen, Lamp)..."
+                      className="w-full h-9 rounded-full bg-white px-4 text-xs placeholder:text-[#6B655D] border-[#DCD4C8] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15"
+                    />
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => setSearchQuery("")}
+                        className="px-3 py-1.5 text-xs text-[#6B655D] hover:text-[#161412] rounded-full shrink-0"
+                      >
+                        Clear
+                      </button>
+                    )}
+                    {pathname !== "/shop" && (
+                      <Button
+                        type="submit"
+                        size="sm"
+                        className="h-9 px-4 rounded-full text-xs font-medium shrink-0"
+                      >
+                        Search
+                      </Button>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[11px] text-[#6B655D] flex-wrap shrink-0">
+                    <span>Try:</span>
+                    {["Oak", "Linen", "Lamp", "Chair"].map((term) => (
+                      <button
+                        key={term}
+                        type="button"
+                        onClick={() => handleQuickTerm(term)}
+                        className="px-2.5 py-1 rounded-full bg-[#EFECE6] text-[#161412] hover:bg-[#E5DDD3] transition-colors"
+                      >
+                        {term}
+                      </button>
+                    ))}
+                  </div>
+                </form>
               </div>
-              <div className="flex items-center gap-1.5 text-[11px] text-[#6B655D] flex-wrap">
-                <span>Try:</span>
-                {["Oak", "Linen", "Lamp", "Chair"].map((term) => (
-                  <button
-                    key={term}
-                    type="button"
-                    onClick={() => handleQuickTerm(term)}
-                    className="px-2.5 py-1 rounded-full bg-[#EFECE6] text-[#161412] hover:bg-[#E5DDD3] transition-colors"
-                  >
-                    {term}
-                  </button>
-                ))}
-              </div>
-            </form>
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Slide-Out Cart Drawer */}

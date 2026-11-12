@@ -6,7 +6,6 @@ import { useStorefront } from "../../context/StorefrontContext";
 import type { CategoryFilter, Product } from "../../types/product";
 import { Newsletter } from "../layout/Newsletter";
 import { Footer, type InfoModalKey } from "../layout/Footer";
-import { Breadcrumb } from "../navigation/Breadcrumb";
 import { ProductToolbar } from "../products/ProductToolbar";
 import { ProductGrid } from "../products/ProductGrid";
 import { ProductPagination } from "../products/ProductPagination";
@@ -191,81 +190,84 @@ export function ShopPage({
 
   return (
     <div className="min-h-screen flex flex-col bg-cream text-charcoal-main selection:bg-stone-200">
-      <main
-        id="catalog-section"
-        className="grow max-w-340 mx-auto w-full px-4 md:px-6 pt-3.5 md:pt-7 pb-10 md:pb-20"
-      >
-        <Breadcrumb
-          activeCategory={category}
-          onResetCategory={() => setCategory("All")}
-        />
-
-        {/* Page Title & Results Count Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-2 md:gap-4 pb-3 md:pb-7">
-          <div>
-            <h1 className="font-serif-display text-[32px] md:text-[44px] font-normal leading-tight text-charcoal-main tracking-tight md:tracking-normal">
-              All Products
-            </h1>
-            <p className="text-text-muted text-[13px] mt-1 md:mt-1.5 leading-snug tracking-normal">
-              Considered pieces for the home you&apos;re building, one room at a time.
-            </p>
+      <main id="catalog-section" className="grow">
+        {/* Hero Banner Header */}
+        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-14 border-b border-[#ECE7DE]">
+          <span className="text-[12px] font-semibold tracking-[0.2em] text-[#8F6232] uppercase block mb-3">
+            CATALOGUE 2026
+          </span>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+            <div>
+              <h1 className="font-serif-display text-4xl sm:text-5xl xl:text-6xl font-medium tracking-tight text-[#161412] leading-[1.08] max-w-2xl">
+                All{" "}
+                <span className="italic text-[#8F6232] font-normal">
+                  Products
+                </span>
+              </h1>
+              <p className="text-[#6B655D] text-sm sm:text-base max-w-md leading-relaxed mt-3">
+                Considered pieces for the home you&apos;re building, one room at a time.
+              </p>
+            </div>
+            <div
+              aria-live="polite"
+              className="text-xs sm:text-sm text-[#6B655D] font-medium self-start lg:self-end pb-1"
+            >
+              {resultsSummary}
+            </div>
           </div>
-          <div
-            aria-live="polite"
-            className="text-[11px] md:text-[12px] text-text-subtle font-medium md:font-normal mt-1 md:mt-0 md:pb-1"
-          >
-            {resultsSummary}
-          </div>
-        </div>
+        </section>
 
-        {/* Filter and View Controls Toolbar */}
-        <ProductToolbar
-          activeCategory={category}
-          onSelectCategory={setCategory}
-          sortBy={sortBy}
-          onChangeSort={setSortBy}
-          viewMode={viewMode}
-          onChangeViewMode={setViewMode}
-          onSaleOnly={onSaleOnly}
-          onToggleSaleOnly={setOnSaleOnly}
-          minRating={minRating}
-          onChangeMinRating={setMinRating}
-          maxPrice={maxPrice}
-          onChangeMaxPrice={setMaxPrice}
-          activeFilterCount={activeFilterCount}
-          onResetFilters={handleResetFilters}
-          filterDrawerOpen={filterDrawerOpen}
-          onToggleFilterDrawer={() => setFilterDrawerOpen((prev) => !prev)}
-          catalogStatus={status}
-          onChangeCatalogStatus={setStatus}
-        />
-
-        {/* Product Listing Grid / List */}
-        <ProductGrid
-          products={displayedProducts}
-          viewMode={viewMode}
-          status={status}
-          activeCategory={category}
-          searchQuery={searchQuery}
-          onResetFilters={handleResetFilters}
-          onRetry={() => setStatus("ready")}
-          isWishlisted={isWishlisted}
-          onToggleWishlist={toggleWishlist}
-          onSelectProduct={(product) => setSelectedProduct(product)}
-          onAddToCart={(productId) => {
-            addToCart(productId);
-            setActiveDrawer("cart");
-          }}
-        />
-
-        {/* Pagination */}
-        {status === "ready" && displayedProducts.length > 0 && (
-          <ProductPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={setCurrentPage}
+        {/* Catalog Body */}
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 pb-10 md:pb-20">
+          {/* Filter and View Controls Toolbar */}
+          <ProductToolbar
+            activeCategory={category}
+            onSelectCategory={setCategory}
+            sortBy={sortBy}
+            onChangeSort={setSortBy}
+            viewMode={viewMode}
+            onChangeViewMode={setViewMode}
+            onSaleOnly={onSaleOnly}
+            onToggleSaleOnly={setOnSaleOnly}
+            minRating={minRating}
+            onChangeMinRating={setMinRating}
+            maxPrice={maxPrice}
+            onChangeMaxPrice={setMaxPrice}
+            activeFilterCount={activeFilterCount}
+            onResetFilters={handleResetFilters}
+            filterDrawerOpen={filterDrawerOpen}
+            onToggleFilterDrawer={() => setFilterDrawerOpen((prev) => !prev)}
+            catalogStatus={status}
+            onChangeCatalogStatus={setStatus}
           />
-        )}
+
+          {/* Product Listing Grid / List */}
+          <ProductGrid
+            products={displayedProducts}
+            viewMode={viewMode}
+            status={status}
+            activeCategory={category}
+            searchQuery={searchQuery}
+            onResetFilters={handleResetFilters}
+            onRetry={() => setStatus("ready")}
+            isWishlisted={isWishlisted}
+            onToggleWishlist={toggleWishlist}
+            onSelectProduct={(product) => setSelectedProduct(product)}
+            onAddToCart={(productId) => {
+              addToCart(productId);
+              setActiveDrawer("cart");
+            }}
+          />
+
+          {/* Pagination */}
+          {status === "ready" && displayedProducts.length > 0 && (
+            <ProductPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
+          )}
+        </div>
       </main>
 
       <Newsletter />

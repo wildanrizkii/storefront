@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { validateNewsletterEmail } from "../../hooks/catalogUtils";
+import { Input } from "../ui/input";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
@@ -52,7 +53,7 @@ export function Newsletter() {
 
           {/* Desktop inline pill layout + Mobile stacked pill layout */}
           <div className="w-full max-w-md flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-0 sm:bg-[#24201C] sm:rounded-full sm:border sm:border-stone-700 sm:p-1 sm:pl-5 focus-within:border-stone-400 transition-colors">
-            <input
+            <Input
               id="newsletter-email"
               name="email"
               type="email"
@@ -66,7 +67,7 @@ export function Newsletter() {
               aria-describedby={
                 feedback ? "newsletter-feedback-message" : undefined
               }
-              className="w-full bg-[#231F1B] sm:bg-transparent border border-stone-700 sm:border-none rounded-full sm:rounded-none px-4 sm:px-0 py-3 sm:py-1.5 text-[12px] md:text-[13px] text-white placeholder:text-text-on-dark-muted focus:outline-none text-center sm:text-left"
+              className="w-full h-auto bg-[#231F1B] sm:bg-transparent border border-stone-700 sm:border-none rounded-full sm:rounded-none px-4 sm:px-0 py-3 sm:py-1.5 text-[12px] md:text-[13px] text-white placeholder:text-text-on-dark-muted focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-center sm:text-left"
               required
             />
             <button

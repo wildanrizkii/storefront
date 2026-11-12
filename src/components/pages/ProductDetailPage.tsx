@@ -73,40 +73,29 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F3] md:bg-white text-[#171512] font-sans antialiased">
       <main className="flex-grow">
-        {/* Breadcrumb Navigation */}
-        <nav
-          aria-label="Breadcrumb"
-          className="max-w-[1240px] mx-auto px-4 md:px-6 pt-3.5 md:pt-5 pb-2 md:pb-7 text-[12px] text-text-muted overflow-x-auto whitespace-nowrap"
-          data-purpose="breadcrumbs"
-        >
-          <ol className="flex items-center space-x-1.5 md:space-x-2">
-            <li>
-              <Link
-                href="/"
-                className="hover:text-[#1A1816] hover:underline transition-colors"
-              >
-                Home
-              </Link>
-            </li>
-            <li aria-hidden="true" className="text-text-subtle">
-              /
-            </li>
-            <li>
-              <Link
-                href="/shop"
-                className="hover:text-[#1A1816] hover:underline transition-colors"
-              >
-                {detail.product.category}
-              </Link>
-            </li>
-            <li aria-hidden="true" className="text-text-subtle">
-              /
-            </li>
-            <li aria-current="page" className="text-[#1A1816] font-medium">
-              {detail.breadcrumbTitle}
-            </li>
-          </ol>
-        </nav>
+        {/* Back Navigation Button */}
+        <div className="max-w-[1240px] mx-auto px-4 md:px-6 pt-5 md:pt-7 pb-2 md:pb-4">
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== "undefined" && window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/shop");
+              }
+            }}
+            aria-label="Back to catalogue"
+            className="inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-[#6B655D] hover:text-[#161412] transition-colors py-1 group"
+          >
+            <span
+              aria-hidden="true"
+              className="text-base leading-none transition-transform duration-200 group-hover:-translate-x-1"
+            >
+              ←
+            </span>
+            <span>Back to Catalogue</span>
+          </button>
+        </div>
 
         {/* Product Showcase Section */}
         <section

@@ -55,7 +55,7 @@ export function Footer({ onSelectCategory, onOpenInfoModal }: FooterProps) {
       className="bg-cream-footer border-t border-border-light text-[12px] text-text-muted pt-10 md:pt-14 pb-8 md:pb-12"
       data-purpose="site-footer"
     >
-      <div className="max-w-[1360px] mx-auto px-5 md:px-6">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-y-7 gap-x-6 md:gap-8 pb-8 md:pb-12">
           {/* Brand Description */}
           <div className="col-span-2 md:col-span-1 space-y-2 pb-2 md:pb-0 border-b md:border-b-0 border-border-light">

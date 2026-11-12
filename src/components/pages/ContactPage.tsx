@@ -4,6 +4,14 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Newsletter } from "../layout/Newsletter";
 import { Footer } from "../layout/Footer";
+import { Input } from "../ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const SHOWROOMS = [
   {
@@ -171,13 +179,13 @@ export function ContactPage() {
                       >
                         Full Name
                       </label>
-                      <input
+                      <Input
                         id="contact-name"
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Clara Lindqvist"
-                        className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus:outline-none focus:border-[#161412]"
+                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus-visible:border-[#161412] focus-visible:ring-1 focus-visible:ring-[#161412]/15 focus-visible:ring-offset-0 focus-visible:outline-none"
                       />
                     </div>
                     <div>
@@ -187,13 +195,13 @@ export function ContactPage() {
                       >
                         Email Address
                       </label>
-                      <input
+                      <Input
                         id="contact-email"
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="clara@example.com"
-                        className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus:outline-none focus:border-[#161412]"
+                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus-visible:border-[#161412] focus-visible:ring-1 focus-visible:ring-[#161412]/15 focus-visible:ring-offset-0 focus-visible:outline-none"
                       />
                     </div>
                   </div>
@@ -205,25 +213,29 @@ export function ContactPage() {
                     >
                       Inquiry Topic
                     </label>
-                    <select
-                      id="contact-topic"
-                      value={topic}
-                      onChange={(e) => setTopic(e.target.value)}
-                      className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] focus:outline-none focus:border-[#161412]"
-                    >
-                      <option value="Swatch Request">
-                        Complimentary Fabric &amp; Oak Swatch Box
-                      </option>
-                      <option value="Showroom Appointment">
-                        Showroom Consultation
-                      </option>
-                      <option value="Delivery & White-Glove">
-                        White-Glove Delivery &amp; Lead Times
-                      </option>
-                      <option value="Trade Program">
-                        Trade &amp; Interior Architecture Program
-                      </option>
-                    </select>
+                    <Select value={topic} onValueChange={setTopic}>
+                      <SelectTrigger
+                        id="contact-topic"
+                        aria-label="Inquiry Topic"
+                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 hover:bg-[#FAF8F4]"
+                      >
+                        <SelectValue placeholder="Select topic" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[#FAF8F4] border-[#E4DEC3]">
+                        <SelectItem value="Swatch Request">
+                          Complimentary Fabric &amp; Oak Swatch Box
+                        </SelectItem>
+                        <SelectItem value="Showroom Appointment">
+                          Showroom Consultation
+                        </SelectItem>
+                        <SelectItem value="Delivery & White-Glove">
+                          White-Glove Delivery &amp; Lead Times
+                        </SelectItem>
+                        <SelectItem value="Trade Program">
+                          Trade &amp; Interior Architecture Program
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   <div>
@@ -239,7 +251,7 @@ export function ContactPage() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Tell us which pieces you are considering, your preferred finishes, or room dimensions..."
-                      className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus:outline-none focus:border-[#161412]"
+                      className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus:outline-none focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 transition-colors"
                     />
                   </div>
 

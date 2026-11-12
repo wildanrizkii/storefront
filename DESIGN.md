@@ -34,7 +34,7 @@
 
 ## Layout, Rhythm & Responsive Reflow (R-03, R-05, R-31)
 
-- **Container:** `max-w-[1360px]` with `24px` (`px-6`) horizontal padding on desktop and `16px` (`px-4`) on mobile. *Reason: Gives four product columns generous breathing room on wide monitors.*
+- **Container:** `max-w-[1400px]` with `48px` (`lg:px-12`) horizontal padding on desktop, `24px` (`md:px-6`) on tablet, and `16px` (`px-4`) on mobile. *Reason: Gives four product columns generous breathing room on wide monitors and aligns consistently with the site header and other pages.*
 - **Section Rhythm (RHYTHM 2):**
   1. Sticky navigation bar (`80px` desktop, compact `56px` mobile with left menu trigger and centered wordmark).
   2. Editorial catalog intro (breadcrumb + serif H1 + subtitle + right-aligned result count on desktop, stacked on mobile).
@@ -49,6 +49,6 @@
 - **Why this color palette?** Warm linen (`#FAF8F3`), stone (`#EFECE6`), and deep charcoal (`#171411`) mirror natural upholstery, oak, and ceramic materials in the Luma & Living collection while meeting WCAG AA contrast.
 - **Why this layout?** A 4-column desktop / 2-column mobile grid with `4:5` portrait cards maximizes visual inspection of furniture silhouettes while keeping filter and sort controls immediately accessible.
 - **Why this typography?** Pairing `Cormorant Garamond` headings with `Inter`/`Plus Jakarta Sans` metadata balances editorial warmth with utilitarian price and filter scannability.
-- **Why this spacing?** Generous vertical row gaps (`44px` desktop, `24px` mobile) and a `1360px` container create an unhurried showroom cadence where each piece stands alone.
+- **Why this spacing?** Generous vertical row gaps (`44px` desktop, `24px` mobile) and a `1400px` container create an unhurried showroom cadence where each piece stands alone.
 - **Why use cards?** Uniform `4:5` portrait product cards allow shoppers to compare silhouettes, ratings, and prices across categories in a single glance.
 - **Why bespoke inline SVGs / curated icons?** Inline stroke SVGs matching the Stitch reference (search magnifier, heart, bag, filter sliders, grid/list glyphs, and social marks) avoid generic AI feature icons while maintaining crisp 1.5px-2px stroke harmony.
