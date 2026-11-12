@@ -1,0 +1,15 @@
+:root {
+  --color-cream: #FAF8F3;
+  --color-cream-header: #FCFAF6;
+  --color-cream-footer: #F2ECE5;
+  --color-card-bg: #EFECE6;
+  --color-charcoal-main: #211E1A;
+  --color-charcoal-dark: #171411;
+  --color-text-muted: #6E685F;
+  --color-text-subtle: #696159;
+  --color-text-on-dark-muted: #B8B0A6;
+  --color-border-light: #DCD4C8;
+  --color-gold-accent: #8A6829;
+  --color-sale-tag: #B33932;
+  --color-badge-sand: #7A5C38;
+}

@@ -1,0 +1,188 @@
+@import "tailwindcss";
+@import "../styles/variables.css";
+
+@theme {
+  --color-cream: var(--color-cream);
+  --color-cream-header: var(--color-cream-header);
+  --color-cream-footer: var(--color-cream-footer);
+  --color-card-bg: var(--color-card-bg);
+  --color-charcoal-main: var(--color-charcoal-main);
+  --color-charcoal-dark: var(--color-charcoal-dark);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-subtle: var(--color-text-subtle);
+  --color-text-on-dark-muted: var(--color-text-on-dark-muted);
+  --color-border-light: var(--color-border-light);
+  --color-gold-accent: var(--color-gold-accent);
+  --color-sale-tag: var(--color-sale-tag);
+  --color-badge-sand: var(--color-badge-sand);
+
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mobile-sans: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-cream);
+    color: var(--color-charcoal-main);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-charcoal-main);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* R-39: Every enabled interactive control displays pointer cursor */
+  a[href],
+  button:not(:disabled),
+  summary,
+  select:not(:disabled),
+  label[for],
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [role="tab"]:not([aria-disabled="true"]),
+  [role="switch"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /* R-32: High-contrast visible keyboard focus indicator */
+  :focus-visible {
+    outline: 2px solid var(--color-charcoal-main);
+    outline-offset: 2px;
+  }
+}
+
+.font-serif-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Dialog, Drawer, and Sheet transitions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes zoomIn95 {
+  from { opacity: 0; transform: scale(0.96) translateY(4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes zoomOut95 {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to { opacity: 0; transform: scale(0.96) translateY(4px); }
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutToRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutToLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes slideInFromBottom {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes slideOutToBottom {
+  from { transform: translateY(0); }
+  to { transform: translateY(100%); }
+}
+
+.animate-in {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
+}
+
+.animate-out {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: forwards;
+}
+
+[data-state="open"].animate-overlay {
+  animation: fadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+[data-state="closed"].animate-overlay {
+  animation: fadeOut 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-state="open"].animate-dialog {
+  animation: zoomIn95 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+[data-state="closed"].animate-dialog {
+  animation: zoomOut95 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-state="open"].animate-slide-right {
+  animation: slideInFromRight 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+[data-state="closed"].animate-slide-right {
+  animation: slideOutToRight 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-state="open"].animate-slide-left {
+  animation: slideInFromLeft 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+[data-state="closed"].animate-slide-left {
+  animation: slideOutToLeft 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-state="open"].animate-slide-bottom {
+  animation: slideInFromBottom 350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+[data-state="closed"].animate-slide-bottom {
+  animation: slideOutToBottom 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* R-39: Stop non-essential transitions and motion when reduced motion is requested */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
