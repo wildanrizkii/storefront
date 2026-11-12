@@ -12,6 +12,8 @@ import { ProductGrid } from "../products/ProductGrid";
 import { ProductPagination } from "../products/ProductPagination";
 import { ProductPrice } from "../products/ProductPrice";
 import { ProductRating } from "../products/ProductRating";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "../ui/dialog";
+import { Button } from "../ui/Button";
 
 const INFO_MODAL_CONTENT: Record<
   InfoModalKey,
@@ -274,19 +276,18 @@ export function ShopPage({
       />
 
       {/* Product Detail Quick-View Modal */}
-      {selectedProduct && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="product-modal-title"
-        >
-          <div
-            className="fixed inset-0 bg-black/45 backdrop-blur-xs"
-            onClick={() => setSelectedProduct(null)}
-            aria-hidden="true"
-          />
-          <div className="relative z-10 w-full max-w-2xl bg-cream border border-border-light rounded-lg shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh] overflow-y-auto">
+      <Dialog
+        open={!!selectedProduct}
+        onOpenChange={(open) => {
+          if (!open) setSelectedProduct(null);
+        }}
+      >
+        {selectedProduct && (
+          <DialogContent
+            hideCloseButton
+            className="max-w-2xl p-0 overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh] overflow-y-auto gap-0 bg-cream"
+            aria-labelledby="product-modal-title"
+          >
             <div className="relative aspect-4/5 bg-card-bg">
               <img
                 src={selectedProduct.imageUrl}
@@ -309,12 +310,17 @@ export function ShopPage({
                     <span className="text-[11px] uppercase tracking-wider text-text-subtle">
                       {selectedProduct.category}
                     </span>
-                    <h2
+                    <DialogTitle
                       id="product-modal-title"
                       className="font-serif-display text-2xl text-charcoal-main mt-0.5"
                     >
                       {selectedProduct.name}
-                    </h2>
+                    </DialogTitle>
+                    <span className="sr-only">
+                      <DialogDescription>
+                        {selectedProduct.description}
+                      </DialogDescription>
+                    </span>
                   </div>
                   <button
                     type="button"
@@ -361,56 +367,57 @@ export function ShopPage({
               </div>
 
               <div className="pt-4 border-t border-border-light flex items-center gap-3">
-                <button
+                <Button
                   type="button"
+                  variant="primary"
                   onClick={() => {
                     addToCart(selectedProduct.id);
                     setSelectedProduct(null);
                     setActiveDrawer("cart");
                   }}
-                  className="flex-1 py-2.5 px-4 rounded-full bg-[#1C1A17] text-white text-[12px] font-medium hover:bg-black transition-colors min-h-11"
+                  className="flex-1"
                 >
                   Add to Shopping Bag
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="outline"
                   onClick={() => toggleWishlist(selectedProduct.id)}
                   aria-pressed={isWishlisted(selectedProduct.id)}
-                  className="py-2.5 px-4 rounded-full border border-border-light text-[12px] font-medium text-charcoal-main hover:border-charcoal-main transition-colors min-h-11"
+                  className="min-h-11 px-4"
                 >
                   {isWishlisted(selectedProduct.id) ? "Saved ♥" : "Save ♡"}
-                </button>
+                </Button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          </DialogContent>
+        )}
+      </Dialog>
 
       {/* Editorial & Support Information Modal */}
-      {activeInfoModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="info-modal-title"
-        >
-          <div
-            className="fixed inset-0 bg-black/45 backdrop-blur-xs"
-            onClick={() => setActiveInfoModal(null)}
-            aria-hidden="true"
-          />
-          <div className="relative z-10 w-full max-w-lg bg-cream border border-border-light rounded-lg shadow-2xl p-6 space-y-4">
+      <Dialog
+        open={!!activeInfoModal}
+        onOpenChange={(open) => {
+          if (!open) setActiveInfoModal(null);
+        }}
+      >
+        {activeInfoModal && (
+          <DialogContent
+            hideCloseButton
+            className="max-w-lg p-6 space-y-4 bg-cream"
+            aria-labelledby="info-modal-title"
+          >
             <div className="flex items-start justify-between gap-3 pb-3 border-b border-border-light">
               <div>
-                <h2
+                <DialogTitle
                   id="info-modal-title"
                   className="font-serif-display text-2xl text-charcoal-main"
                 >
                   {INFO_MODAL_CONTENT[activeInfoModal].title}
-                </h2>
-                <p className="text-[12px] text-text-subtle mt-0.5">
+                </DialogTitle>
+                <DialogDescription className="text-[12px] text-text-subtle mt-0.5">
                   {INFO_MODAL_CONTENT[activeInfoModal].subtitle}
-                </p>
+                </DialogDescription>
               </div>
               <button
                 type="button"
@@ -431,17 +438,17 @@ export function ShopPage({
             </div>
 
             <div className="pt-3 border-t border-border-light flex justify-end">
-              <button
+              <Button
                 type="button"
+                variant="primary"
                 onClick={() => setActiveInfoModal(null)}
-                className="px-5 py-2 rounded-full bg-[#1C1A17] text-white text-[12px] font-medium hover:bg-black min-h-10"
               >
                 Return to Catalogue
-              </button>
+              </Button>
             </div>
-          </div>
-        </div>
-      )}
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 }

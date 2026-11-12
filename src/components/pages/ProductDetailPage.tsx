@@ -11,6 +11,12 @@ import {
 import { useStorefront } from "../../context/StorefrontContext";
 import { Newsletter } from "../layout/Newsletter";
 import { Footer, type InfoModalKey } from "../layout/Footer";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/dialog";
 
 export interface ProductDetailPageProps {
   productId: string;
