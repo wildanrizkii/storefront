@@ -11,6 +11,12 @@ import {
   STORY_IMAGES,
 } from "../../data/landingData";
 import { useStorefront } from "../../context/StorefrontContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "../ui/dialog";
 
 type BestSellerTab =
   | "All"
@@ -715,23 +721,22 @@ export function LandingPage() {
       </footer>
 
       {/* Legal / Sustainability Info Modal */}
-      {legalModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label={LEGAL_MODAL_COPY[legalModal].title}
-        >
-          <div
-            className="fixed inset-0 bg-black/50 backdrop-blur-xs"
-            onClick={() => setLegalModal(null)}
-            aria-hidden="true"
-          />
-          <div className="relative z-10 w-full max-w-md bg-[#FAF8F4] border border-[#ECE7DE] rounded-2xl p-6 shadow-2xl space-y-4">
+      <Dialog
+        open={!!legalModal}
+        onOpenChange={(open) => {
+          if (!open) setLegalModal(null);
+        }}
+      >
+        {legalModal && (
+          <DialogContent
+            hideCloseButton
+            className="w-full max-w-md bg-[#FAF8F4] border border-[#ECE7DE] rounded-2xl p-6 shadow-2xl space-y-4"
+            aria-label={LEGAL_MODAL_COPY[legalModal].title}
+          >
             <div className="flex items-center justify-between pb-3 border-b border-[#ECE7DE]">
-              <h2 className="font-serif-display text-2xl text-[#161412]">
+              <DialogTitle className="font-serif-display text-2xl text-[#161412]">
                 {LEGAL_MODAL_COPY[legalModal].title}
-              </h2>
+              </DialogTitle>
               <button
                 type="button"
                 onClick={() => setLegalModal(null)}
@@ -742,13 +747,18 @@ export function LandingPage() {
               </button>
             </div>
             <div className="space-y-3 text-xs text-[#6B655D] leading-relaxed">
+              <span className="sr-only">
+                <DialogDescription>
+                  {LEGAL_MODAL_COPY[legalModal].title} details
+                </DialogDescription>
+              </span>
               {LEGAL_MODAL_COPY[legalModal].body.map((line, i) => (
                 <p key={i}>{line}</p>
               ))}
             </div>
-          </div>
-        </div>
-      )}
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 }

@@ -837,23 +837,22 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
       />
 
       {/* Info Modal if triggered from header/footer */}
-      {activeInfoModal && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-          aria-label={activeInfoModal}
-        >
-          <div
-            className="fixed inset-0 bg-black/45 backdrop-blur-xs"
-            onClick={() => setActiveInfoModal(null)}
-            aria-hidden="true"
-          />
-          <div className="relative z-10 w-full max-w-lg bg-cream border border-border-light rounded-lg shadow-2xl p-6 space-y-4">
+      <Dialog
+        open={!!activeInfoModal}
+        onOpenChange={(open) => {
+          if (!open) setActiveInfoModal(null);
+        }}
+      >
+        {activeInfoModal && (
+          <DialogContent
+            hideCloseButton
+            className="max-w-lg p-6 space-y-4 bg-cream"
+            aria-label={activeInfoModal}
+          >
             <div className="flex items-center justify-between pb-3 border-b border-border-light">
-              <h2 className="font-serif-display text-2xl text-charcoal-main">
+              <DialogTitle className="font-serif-display text-2xl text-charcoal-main">
                 {activeInfoModal}
-              </h2>
+              </DialogTitle>
               <button
                 type="button"
                 onClick={() => setActiveInfoModal(null)}
@@ -863,15 +862,15 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
                 ✕
               </button>
             </div>
-            <p className="text-xs text-text-muted leading-relaxed">
+            <DialogDescription className="text-xs text-text-muted leading-relaxed">
               Luma &amp; Living partners with FSC-certified European oak mills,
               Belgian linen weavers, and ceramic studios to craft heirloom
               residential furniture. Reach our client team at
               atelier@lumaliving.com.
-            </p>
-          </div>
-        </div>
-      )}
+            </DialogDescription>
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 }
