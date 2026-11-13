@@ -74,6 +74,10 @@ export function Header() {
     }
   };
 
+  if (pathname.startsWith("/checkout") || pathname === "/order-confirmation") {
+    return null;
+  }
+
   return (
     <>
       <header
@@ -278,7 +282,7 @@ export function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search by piece name, room, or material (e.g., Oak, Linen, Lamp)..."
-                      className="w-full h-9 rounded-full bg-white px-4 text-xs placeholder:text-[#6B655D] border-[#DCD4C8] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15"
+                      className="w-full h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#DCD4C8] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15"
                     />
                     {searchQuery && (
                       <button
