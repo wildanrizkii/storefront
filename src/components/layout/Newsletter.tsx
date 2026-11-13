@@ -28,14 +28,14 @@ export function Newsletter() {
       className="bg-charcoal-dark text-white py-12 md:py-20 px-5 md:px-6"
       data-purpose="newsletter-signup"
     >
-      <div className="max-w-[560px] mx-auto text-center space-y-3 md:space-y-4">
+      <div className="max-w-140 mx-auto text-center space-y-3 md:space-y-4">
         <h2
           id="newsletter-heading"
           className="font-serif-display text-[28px] md:text-[38px] font-normal tracking-tight md:tracking-wide text-[#FDFCFB]"
         >
           Stay in the loop
         </h2>
-        <p className="text-text-on-dark-muted text-[12px] md:text-[13px] tracking-normal max-w-[320px] md:max-w-[420px] mx-auto leading-relaxed">
+        <p className="text-text-on-dark-muted text-[12px] md:text-[13px] tracking-normal max-w-[320px] md:max-w-105 mx-auto leading-relaxed">
           New arrivals, restocks, and stories from the workshop, once a month, never more.
         </p>
 
@@ -67,12 +67,12 @@ export function Newsletter() {
               aria-describedby={
                 feedback ? "newsletter-feedback-message" : undefined
               }
-              className="w-full h-auto bg-[#231F1B] sm:bg-transparent border border-stone-700 sm:border-none rounded-full sm:rounded-none px-4 sm:px-0 py-3 sm:py-1.5 text-[12px] md:text-[13px] text-white placeholder:text-text-on-dark-muted focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-center sm:text-left"
+              className="w-full h-auto bg-[#231F1B] sm:bg-transparent border border-stone-700 sm:border-none rounded-full sm:rounded-none px-4 sm:px-0 py-3 sm:py-1.5 text-base sm:text-[12px] md:text-[13px] text-white placeholder:text-text-on-dark-muted focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 text-center sm:text-left"
               required
             />
             <button
               type="submit"
-              className="w-full sm:w-auto bg-[#FAF7F2] sm:bg-white text-charcoal-dark font-medium text-[12px] px-5 py-3 sm:py-2 rounded-full hover:bg-stone-200 active:scale-[0.99] transition-all shrink-0 min-h-[44px] sm:min-h-[36px]"
+              className="w-full sm:w-auto bg-[#FAF7F2] sm:bg-white text-charcoal-dark font-medium text-[12px] px-5 py-3 sm:py-2 rounded-full hover:bg-stone-200 active:scale-[0.99] transition-all shrink-0 min-h-11 sm:min-h-9"
             >
               Subscribe
             </button>

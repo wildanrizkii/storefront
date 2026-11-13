@@ -76,3 +76,35 @@ test("Header search bar container width aligns with max-w-[1400px] grid layout a
     "Header search bar must use Framer Motion AnimatePresence and motion.div for animated entrance and exit transitions"
   );
 });
+
+test("Mobile anti-zoom and viewport position stability rules are configured", () => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  
+  // 1. Check layout.tsx viewport
+  const layoutPath = path.resolve(__dirname, "../app/layout.tsx");
+  const layoutCode = fs.readFileSync(layoutPath, "utf-8");
+  assert.ok(
+    layoutCode.includes("maximumScale: 1"),
+    "layout.tsx must configure maximumScale: 1 in viewport to prevent browser auto-zoom"
+  );
+
+  // 2. Check globals.css 16px mobile input rule
+  const cssPath = path.resolve(__dirname, "../app/globals.css");
+  const css = fs.readFileSync(cssPath, "utf-8");
+  assert.ok(
+    css.includes("font-size: 16px !important"),
+    "globals.css must ensure form controls have font-size: 16px on mobile"
+  );
+  assert.ok(
+    css.includes("touch-action: manipulation"),
+    "globals.css must specify touch-action: manipulation to avoid double-tap/gesture zoom delays"
+  );
+
+  // 3. Check Input component has responsive mobile text-base
+  const inputPath = path.resolve(__dirname, "../components/ui/input.tsx");
+  const inputCode = fs.readFileSync(inputPath, "utf-8");
+  assert.ok(
+    inputCode.includes("text-base md:text-sm"),
+    "Input component must use text-base md:text-sm to prevent iOS Safari auto-zoom on mobile"
+  );
+});

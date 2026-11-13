@@ -59,9 +59,9 @@ export function ContactPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F4] text-[#161412] font-sans antialiased">
-      <main className="flex-grow">
+      <main className="grow">
         {/* Header */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-12 border-b border-[#ECE7DE]">
+        <section className="max-w-350 mx-auto px-6 lg:px-12 pt-12 pb-12 border-b border-[#ECE7DE]">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-[#8F6232] uppercase block mb-3">
             SHOWROOMS &amp; INQUIRIES
           </span>
@@ -75,7 +75,7 @@ export function ContactPage() {
         </section>
 
         {/* Contact Content Grid */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <section className="max-w-350 mx-auto px-6 lg:px-12 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left Column: Showrooms & Direct Channels */}
           <div className="lg:col-span-5 space-y-6">
             {SHOWROOMS.map((room) => (
@@ -185,7 +185,7 @@ export function ContactPage() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Clara Lindqvist"
-                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus-visible:border-[#161412] focus-visible:ring-1 focus-visible:ring-[#161412]/15 focus-visible:ring-offset-0 focus-visible:outline-none"
+                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-base sm:text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus-visible:border-[#161412] focus-visible:ring-1 focus-visible:ring-[#161412]/15 focus-visible:ring-offset-0 focus-visible:outline-none"
                       />
                     </div>
                     <div>
@@ -201,7 +201,7 @@ export function ContactPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="clara@example.com"
-                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus-visible:border-[#161412] focus-visible:ring-1 focus-visible:ring-[#161412]/15 focus-visible:ring-offset-0 focus-visible:outline-none"
+                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-base sm:text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus-visible:border-[#161412] focus-visible:ring-1 focus-visible:ring-[#161412]/15 focus-visible:ring-offset-0 focus-visible:outline-none"
                       />
                     </div>
                   </div>
@@ -217,7 +217,7 @@ export function ContactPage() {
                       <SelectTrigger
                         id="contact-topic"
                         aria-label="Inquiry Topic"
-                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 hover:bg-[#FAF8F4]"
+                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-base sm:text-sm text-[#161412] focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 hover:bg-[#FAF8F4]"
                       >
                         <SelectValue placeholder="Select topic" />
                       </SelectTrigger>
@@ -251,7 +251,7 @@ export function ContactPage() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Tell us which pieces you are considering, your preferred finishes, or room dimensions..."
-                      className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus:outline-none focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 transition-colors"
+                      className="w-full rounded-xl bg-[#FAF8F4] border border-[#E4DEC3] px-4 py-2.5 text-base sm:text-sm text-[#161412] placeholder:text-[#6B655D]/70 focus:outline-none focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 transition-colors"
                     />
                   </div>
 

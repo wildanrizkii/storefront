@@ -16,7 +16,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "flex h-9 w-full items-center justify-between rounded-lg border border-[#DCD4C8] bg-[#FCFAF6] px-3 py-1.5 text-xs text-[#211E1A] placeholder:text-[#6E685F] focus:outline-none focus:border-[#211E1A] focus:ring-1 focus:ring-[#211E1A]/15 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-colors hover:bg-[#EFECE6]",
+      "flex h-9 w-full items-center justify-between rounded-lg border border-[#DCD4C8] bg-[#FCFAF6] px-3 py-1.5 text-base md:text-xs text-[#211E1A] placeholder:text-[#6E685F] focus:outline-none focus:border-[#211E1A] focus:ring-1 focus:ring-[#211E1A]/15 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 transition-colors hover:bg-[#EFECE6]",
       className
     )}
     {...props}
@@ -72,7 +72,7 @@ const SelectContent = React.forwardRef<
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-lg border border-[#DCD4C8] bg-[#FAF8F4] text-[#211E1A] shadow-lg animate-overlay data-[side=bottom]:translate-y-1 data-[side=top]:-translate-y-1",
+        "relative z-50 max-h-96 min-w-32 overflow-hidden rounded-lg border border-[#DCD4C8] bg-[#FAF8F4] text-[#211E1A] shadow-lg animate-overlay data-[side=bottom]:translate-y-1 data-[side=top]:-translate-y-1",
         position === "popper" &&
           "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
         className
@@ -85,7 +85,7 @@ const SelectContent = React.forwardRef<
         className={cn(
           "p-1.5",
           position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+            "h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width)"
         )}
       >
         {children}
@@ -115,7 +115,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-xs outline-none focus:bg-[#EFECE6] focus:text-[#161412] data-[disabled]:pointer-events-none data-[disabled]:opacity-50 transition-colors",
+      "relative flex w-full cursor-default select-none items-center rounded-md py-1.5 pl-8 pr-2 text-xs outline-none focus:bg-[#EFECE6] focus:text-[#161412] data-disabled:pointer-events-none data-disabled:opacity-50 transition-colors",
       className
     )}
     {...props}
