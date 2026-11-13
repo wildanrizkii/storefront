@@ -26,6 +26,9 @@ test("getActiveNavSection resolves active menu across storefront routes", () => 
   assert.equal(getActiveNavSection("/shop"), "Shop");
   assert.equal(getActiveNavSection("/products/hollis-3-seater-sofa"), "Shop");
   assert.equal(getActiveNavSection("/cart"), "Shop");
+  assert.equal(getActiveNavSection("/checkout"), "Shop");
+  assert.equal(getActiveNavSection("/checkout/confirmation"), "Shop");
+  assert.equal(getActiveNavSection("/order-confirmation"), "Shop");
   assert.equal(getActiveNavSection("/collections"), "Collections");
   assert.equal(getActiveNavSection("/about"), "About");
   assert.equal(getActiveNavSection("/contact"), "Contact");

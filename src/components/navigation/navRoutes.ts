@@ -39,7 +39,9 @@ export function getActiveNavSection(
   if (
     normalized.startsWith("/shop") ||
     normalized.startsWith("/products") ||
-    normalized.startsWith("/cart")
+    normalized.startsWith("/cart") ||
+    normalized.startsWith("/checkout") ||
+    normalized.startsWith("/order-confirmation")
   ) {
     return "Shop";
   }
