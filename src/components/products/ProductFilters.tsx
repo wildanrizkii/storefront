@@ -66,12 +66,12 @@ export function ProductFilters({
           type="button"
           onClick={onToggleDrawer}
           aria-expanded={drawerOpen}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#1C1A17] text-white rounded-full font-medium hover:bg-black active:scale-95 transition-all shrink-0 min-h-[34px]"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#1C1A17] text-white rounded-full font-medium hover:bg-black active:scale-95 transition-all shrink-0 min-h-8.5"
         >
           {/* Desktop filter lines icon */}
           <svg
             aria-hidden="true"
-            className="hidden md:inline w-3.5 h-3.5 stroke-[2]"
+            className="hidden md:inline w-3.5 h-3.5 stroke-2"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -83,7 +83,7 @@ export function ProductFilters({
           {/* Mobile filter sliders icon */}
           <svg
             aria-hidden="true"
-            className="md:hidden w-3.5 h-3.5 stroke-current stroke-[2]"
+            className="md:hidden w-3.5 h-3.5 stroke-current stroke-2"
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -113,8 +113,8 @@ export function ProductFilters({
               aria-pressed={isActive}
               className={
                 isActive
-                  ? "px-3.5 py-1.5 bg-[#1C1A17] text-white rounded-full font-medium hover:bg-black transition-colors shrink-0 min-h-[34px]"
-                  : "px-3.5 md:px-3 py-1.5 bg-[#F2ECE5] md:bg-transparent hover:bg-[#E9E3DA] md:hover:bg-transparent text-charcoal-main hover:text-black rounded-full transition-colors font-medium md:font-normal shrink-0 min-h-[34px]"
+                  ? "px-3.5 py-1.5 bg-[#1C1A17] text-white rounded-full font-medium hover:bg-black transition-colors shrink-0 min-h-8.5"
+                  : "px-3.5 md:px-3 py-1.5 bg-[#F2ECE5] md:bg-transparent hover:bg-[#E9E3DA] md:hover:bg-transparent text-charcoal-main hover:text-black rounded-full transition-colors font-medium md:font-normal shrink-0 min-h-8.5"
               }
             >
               {cat.label}
@@ -127,7 +127,7 @@ export function ProductFilters({
             type="button"
             onClick={() => onSelectCategory("All")}
             aria-pressed={true}
-            className="px-3.5 py-1.5 bg-[#1C1A17] text-white rounded-full font-medium hover:bg-black transition-colors shrink-0 min-h-[34px]"
+            className="px-3.5 py-1.5 bg-[#1C1A17] text-white rounded-full font-medium hover:bg-black transition-colors shrink-0 min-h-8.5"
           >
             Bedroom ×
           </button>
@@ -161,7 +161,7 @@ export function ProductFilters({
                 type="button"
                 onClick={onToggleDrawer}
                 aria-label="Close filters"
-                className="min-w-[44px] min-h-[44px] inline-flex items-center justify-center rounded-full text-charcoal-main hover:bg-[#EFECE6]"
+                className="min-w-11 min-h-11 inline-flex items-center justify-center rounded-full text-charcoal-main hover:bg-[#EFECE6]"
               >
                 <svg
                   aria-hidden="true"

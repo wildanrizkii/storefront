@@ -40,8 +40,8 @@ export function Header() {
   } = useStorefront();
 
   useEffect(() => {
-    if (searchOpen) {
-      searchInputRef.current?.focus();
+    if (!searchOpen) {
+      searchInputRef.current?.blur();
     }
   }, [searchOpen]);
 
@@ -132,7 +132,7 @@ export function Header() {
               onClick={() => setSearchOpen((prev) => !prev)}
               aria-label="Search catalogue"
               aria-expanded={searchOpen}
-              className="min-w-11 min-h-11 md:min-w-9 md:min-h-9 inline-flex items-center justify-center hover:opacity-75 transition rounded-full"
+              className="min-w-11 min-h-11 md:min-w-9 md:min-h-9 inline-flex items-center justify-center hover:opacity-75 transition rounded-full touch-manipulation"
             >
               <svg
                 aria-hidden="true"
@@ -257,6 +257,11 @@ export function Header() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              onAnimationComplete={() => {
+                if (searchOpen) {
+                  searchInputRef.current?.focus({ preventScroll: true });
+                }
+              }}
               className="overflow-hidden border-t border-[#ECE7DE] bg-[#FAF8F4]"
             >
               <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 py-3.5">
@@ -278,7 +283,7 @@ export function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search by piece name, room, or material (e.g., Oak, Linen, Lamp)..."
-                      className="w-full h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#DCD4C8] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15"
+                      className="w-full h-10 md:h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#DCD4C8] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15 touch-manipulation appearance-none [-webkit-appearance:none]"
                     />
                     {searchQuery && (
                       <button

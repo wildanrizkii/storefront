@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 import { withRedact } from "@tanstack/redact/next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ["192.168.75.176"],
   async redirects() {
     return [
       {

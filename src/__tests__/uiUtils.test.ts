@@ -87,6 +87,10 @@ test("Mobile anti-zoom and viewport position stability rules are configured", ()
     layoutCode.includes("maximumScale: 1"),
     "layout.tsx must configure maximumScale: 1 in viewport to prevent browser auto-zoom"
   );
+  assert.ok(
+    layoutCode.includes("userScalable: false"),
+    "layout.tsx must configure userScalable: false to prevent mobile browser auto-zoom"
+  );
 
   // 2. Check globals.css 16px mobile input rule
   const cssPath = path.resolve(__dirname, "../app/globals.css");
@@ -99,6 +103,10 @@ test("Mobile anti-zoom and viewport position stability rules are configured", ()
     css.includes("touch-action: manipulation"),
     "globals.css must specify touch-action: manipulation to avoid double-tap/gesture zoom delays"
   );
+  assert.ok(
+    css.includes("-webkit-text-size-adjust: 100%"),
+    "globals.css must set -webkit-text-size-adjust to prevent text-size inflation"
+  );
 
   // 3. Check Input component has responsive mobile text-base
   const inputPath = path.resolve(__dirname, "../components/ui/input.tsx");
@@ -106,5 +114,21 @@ test("Mobile anti-zoom and viewport position stability rules are configured", ()
   assert.ok(
     inputCode.includes("text-base md:text-sm"),
     "Input component must use text-base md:text-sm to prevent iOS Safari auto-zoom on mobile"
+  );
+
+  // 4. Check Header.tsx focus lifecycle and mobile touch stability
+  const headerPath = path.resolve(__dirname, "../components/layout/Header.tsx");
+  const headerCode = fs.readFileSync(headerPath, "utf-8");
+  assert.ok(
+    headerCode.includes("preventScroll: true"),
+    "Header.tsx must use preventScroll: true on input focus to avoid scroll jumps and glitch"
+  );
+  assert.ok(
+    headerCode.includes("onAnimationComplete"),
+    "Header.tsx must synchronize focus with onAnimationComplete to avoid focusing a 0-height container"
+  );
+  assert.ok(
+    headerCode.includes("touch-manipulation"),
+    "Header.tsx search toggle button must include touch-manipulation to eliminate double-tap zoom triggers"
   );
 });

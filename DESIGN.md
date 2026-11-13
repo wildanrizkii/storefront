@@ -13,7 +13,7 @@
 
 | Token | Hex | Role | One-Line Purpose & Contrast Note |
 |---|---|---|---|
-| `--color-cream` | `#FAF8F3` | Primary page canvas | Warm linen base avoids sterile white and grounds wood/ceramic product tones. |
+| `--color-cream` | `#FAF8F4` | Primary page canvas | Warm linen base avoids sterile white and grounds wood/ceramic product tones. |
 | `--color-cream-header` | `#FCFAF6` | Sticky header surface | Slightly lighter warm ivory distinguishes navigation chrome from the catalog canvas. |
 | `--color-card-bg` | `#EFECE6` | Product image container | Neutral stone frame holds a 4:5 editorial ratio before and behind product photography. |
 | `--color-cream-footer` | `#F2ECE5` | Footer surface | Deeper sand tone anchors the bottom of the page below the dark newsletter band. |
@@ -46,7 +46,7 @@
 
 ## One-Line Decision Reasons (R-31)
 
-- **Why this color palette?** Warm linen (`#FAF8F3`), stone (`#EFECE6`), and deep charcoal (`#171411`) mirror natural upholstery, oak, and ceramic materials in the Luma & Living collection while meeting WCAG AA contrast.
+- **Why this color palette?** Warm linen (`#FAF8F4`), stone (`#EFECE6`), and deep charcoal (`#171411`) mirror natural upholstery, oak, and ceramic materials in the Luma & Living collection while meeting WCAG AA contrast.
 - **Why this layout?** A 4-column desktop / 2-column mobile grid with `4:5` portrait cards maximizes visual inspection of furniture silhouettes while keeping filter and sort controls immediately accessible.
 - **Why this typography?** Pairing `Cormorant Garamond` headings with `Inter`/`Plus Jakarta Sans` metadata balances editorial warmth with utilitarian price and filter scannability.
 - **Why this spacing?** Generous vertical row gaps (`44px` desktop, `24px` mobile) and a `1400px` container create an unhurried showroom cadence where each piece stands alone.

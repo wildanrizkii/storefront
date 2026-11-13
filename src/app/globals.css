@@ -27,6 +27,8 @@
     color: var(--color-charcoal-main);
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -35,6 +37,8 @@
     color: var(--color-charcoal-main);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   /* Prevent Radix Select / modal scroll lock from hiding scrollbar or causing layout shift */
@@ -80,6 +84,12 @@
       font-size: 16px !important;
       touch-action: manipulation;
     }
+  }
+
+  /* Normalize search inputs across WebKit/Blink to prevent zoom and layout shifts */
+  input[type="search"] {
+    -webkit-appearance: none;
+    touch-action: manipulation;
   }
 
   /* Cross-browser standard scrollbar */
