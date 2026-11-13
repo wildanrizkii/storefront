@@ -466,7 +466,7 @@ export function CartDrawer({
                   value={promoCode}
                   onChange={(e) => setPromoCode(e.target.value)}
                   placeholder="Try LUMA10"
-                  className="flex-1 h-9 rounded-lg text-xs"
+                  className="flex-1 h-9 rounded-lg text-base md:text-xs"
                 />
                 <Button
                   type="submit"
@@ -516,11 +516,12 @@ export function CartDrawer({
 
           {/* Primary Checkout CTA Button */}
           <div>
-            <button
-              type="button"
-              onClick={() => setCheckoutSubmitted((prev) => !prev)}
-              disabled={items.length === 0}
-              className="w-full bg-[#171411] text-[#FAF8F3] hover:bg-neutral-800 active:scale-[0.99] transition-all rounded-full py-3.5 px-6 font-medium text-xs tracking-wider uppercase flex items-center justify-between shadow-md disabled:opacity-50"
+            <Link
+              href="/checkout"
+              onClick={onClose}
+              className={`w-full bg-[#171411] text-[#FAF8F3] hover:bg-neutral-800 active:scale-[0.99] transition-all rounded-full py-3.5 px-6 font-medium text-xs tracking-wider uppercase flex items-center justify-between shadow-md ${
+                items.length === 0 ? "pointer-events-none opacity-50" : ""
+              }`}
             >
               <span className="flex items-center gap-2">
                 <svg
@@ -542,7 +543,7 @@ export function CartDrawer({
               <span className="tracking-normal font-sans font-semibold text-sm">
                 ${estimatedTotal.toLocaleString("en-US")} →
               </span>
-            </button>
+            </Link>
           </div>
 
           {checkoutSubmitted && (
