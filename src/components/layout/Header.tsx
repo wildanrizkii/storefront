@@ -74,10 +74,6 @@ export function Header() {
     }
   };
 
-  if (pathname.startsWith("/checkout") || pathname === "/order-confirmation") {
-    return null;
-  }
-
   return (
     <>
       <header

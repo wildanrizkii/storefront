@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Checkbox } from "../ui/checkbox";
 import {
   CHECKOUT_DEFAULT_ITEMS,
   CHECKOUT_SAVED_ADDRESSES,
@@ -99,53 +100,6 @@ export function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-[#F8F5EE] text-[#1F1B16] font-sans antialiased pb-28 lg:pb-16">
-      {/* Streamlined Checkout Header */}
-      <header
-        className="w-full bg-[#FAF7F2] border-b border-[#EAE4D9] sticky top-0 z-40 backdrop-blur-md"
-        data-purpose="checkout-header"
-      >
-        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 h-16 md:h-20 flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="font-serif-display text-2xl md:text-3xl font-medium tracking-tight text-[#1A1816] hover:opacity-85 transition-opacity"
-          >
-            Luma &amp; Living
-          </Link>
-
-          {/* Security Status Badge */}
-          <div className="flex items-center gap-1.5 md:gap-2 text-xs font-medium text-[#7A7265] tracking-wide">
-            <svg
-              className="w-4 h-4 text-[#C27D2D]"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <span className="hidden sm:inline">Secure Checkout</span>
-            <span className="sm:hidden">Secure</span>
-          </div>
-
-          {/* Header Cart Pill */}
-          <Link
-            href="/cart"
-            className="bg-[#1C1917] text-white text-xs font-semibold px-4 py-2 rounded-full hover:bg-neutral-800 transition shadow-sm inline-flex items-center gap-1.5"
-          >
-            <span>Cart</span>
-            <span className="bg-white/20 text-white rounded-full px-1.5 py-0.2 text-[10px]">
-              {totalItemCount}
-            </span>
-          </Link>
-        </div>
-      </header>
-
       {/* Stepper Progress Banner */}
       <section className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 pt-6 md:pt-9 pb-5 md:pb-7">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#ECE6DB] pb-6">
@@ -245,9 +199,8 @@ export function CheckoutPage() {
                 ${totals.total.toLocaleString("en-US", { minimumFractionDigits: 2 })}
               </span>
               <svg
-                className={`w-4 h-4 text-[#7A7265] transition-transform duration-200 ${
-                  mobileSummaryExpanded ? "rotate-180" : ""
-                }`}
+                className={`w-4 h-4 text-[#7A7265] transition-transform duration-200 ${mobileSummaryExpanded ? "rotate-180" : ""
+                  }`}
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="2"
@@ -435,12 +388,17 @@ export function CheckoutPage() {
                 </div>
 
                 {/* Marketing Checkbox */}
-                <label className="flex items-start sm:items-center gap-3 cursor-pointer text-xs sm:text-[13px] text-[#423C33] select-none">
-                  <input
-                    type="checkbox"
+                <label
+                  htmlFor="marketing-consent"
+                  className="flex items-start sm:items-center gap-2 cursor-pointer text-xs sm:text-[13px] text-[#423C33] select-none"
+                >
+                  <Checkbox
+                    id="marketing-consent"
                     checked={marketingConsent}
-                    onChange={(e) => setMarketingConsent(e.target.checked)}
-                    className="mt-0.5 sm:mt-0 rounded border-[#D5CDC1] text-[#C27D2D] focus:ring-0 focus:ring-offset-0 w-4 h-4"
+                    onCheckedChange={(checked) =>
+                      setMarketingConsent(checked === true)
+                    }
+                    className="mb-0.5"
                   />
                   <span>
                     Email me with order updates and white-glove shipping notifications
@@ -474,11 +432,10 @@ export function CheckoutPage() {
                   return (
                     <label
                       key={address.id}
-                      className={`block relative rounded-xl p-4 sm:p-5 cursor-pointer transition shadow-xs ${
-                        isSelected
-                          ? "border-2 border-[#C27D2D] bg-[#FDFBF7]"
-                          : "border border-[#E5DFD4] bg-white hover:border-[#D5CDC1]"
-                      }`}
+                      className={`block relative rounded-xl p-4 sm:p-5 cursor-pointer transition shadow-xs ${isSelected
+                        ? "border-2 border-[#C27D2D] bg-[#FDFBF7]"
+                        : "border border-[#E5DFD4] bg-white hover:border-[#D5CDC1]"
+                        }`}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-start gap-3.5">
@@ -624,11 +581,10 @@ export function CheckoutPage() {
                         key={tag}
                         type="button"
                         onClick={() => handleTagToggle(tag)}
-                        className={`text-[11px] font-medium px-3 py-1.5 rounded-full border transition active:scale-95 ${
-                          isSelected
-                            ? "bg-[#FDF5EB] border-[#C27D2D] text-[#87551C]"
-                            : "bg-[#FAF7F2] hover:bg-[#F2ECE1] text-[#635C52] border-[#EAE3D6]"
-                        }`}
+                        className={`text-[11px] font-medium px-3 py-1.5 rounded-full border transition active:scale-95 ${isSelected
+                          ? "bg-[#FDF5EB] border-[#C27D2D] text-[#87551C]"
+                          : "bg-[#FAF7F2] hover:bg-[#F2ECE1] text-[#635C52] border-[#EAE3D6]"
+                          }`}
                       >
                         {tag}
                       </button>

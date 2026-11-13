@@ -23,50 +23,6 @@ export function OrderConfirmationPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#2D2823] font-sans antialiased">
-      {/* Streamlined Confirmation Header */}
-      <header
-        className="border-b border-[#EAE3DA] bg-[#FBF9F5]/90 backdrop-blur sticky top-0 z-40"
-        data-purpose="confirmation-header"
-      >
-        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 h-16 md:h-20 flex items-center justify-between">
-          {/* Brand Logo */}
-          <Link
-            href="/"
-            className="font-serif-display text-2xl md:text-3xl font-medium tracking-tight text-[#1F1B18] hover:opacity-85 transition-opacity"
-          >
-            Luma &amp; Living
-          </Link>
-
-          {/* Verified Purchase Status Badge */}
-          <div className="hidden sm:flex items-center gap-2 text-xs tracking-wider uppercase text-[#736B63] bg-[#F2ECE5] px-3.5 py-1.5 rounded-full">
-            <svg
-              className="w-3.5 h-3.5 text-[#B46D2D]"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
-            >
-              <path
-                clipRule="evenodd"
-                fillRule="evenodd"
-                d="M10 2a4 4 0 00-4 4v2H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V6a4 4 0 00-4-4zm2 6V6a2 2 0 10-4 0v2h4z"
-              />
-            </svg>
-            <span>Verified Purchase</span>
-          </div>
-
-          {/* Support Link */}
-          <Link
-            href="/contact"
-            className="text-sm font-medium text-[#4D453E] hover:text-[#1F1B18] transition flex items-center gap-2"
-          >
-            <span>Need Help?</span>
-            <span className="text-xs bg-[#EAE3DA] px-2 py-0.5 rounded text-[#5D554D]">
-              Support
-            </span>
-          </Link>
-        </div>
-      </header>
-
       {/* Main Content Layout */}
       <main className="flex-grow max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 py-10 md:py-14 w-full">
         {/* Hero / Success Notification Banner */}
@@ -87,6 +43,23 @@ export function OrderConfirmationPage() {
                 strokeLinejoin="round"
               />
             </svg>
+          </div>
+
+          {/* Verified Purchase Status Badge */}
+          <div className="inline-flex items-center gap-2 text-xs tracking-wider uppercase text-[#736B63] bg-[#F2ECE5] px-3.5 py-1.5 rounded-full mb-3">
+            <svg
+              className="w-3.5 h-3.5 text-[#B46D2D]"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              aria-hidden="true"
+            >
+              <path
+                clipRule="evenodd"
+                fillRule="evenodd"
+                d="M10 2a4 4 0 00-4 4v2H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-1V6a4 4 0 00-4-4zm2 6V6a2 2 0 10-4 0v2h4z"
+              />
+            </svg>
+            <span>Verified Purchase</span>
           </div>
 
           <p className="text-xs md:text-sm font-semibold tracking-widest uppercase text-[#B46D2D] mb-2">
