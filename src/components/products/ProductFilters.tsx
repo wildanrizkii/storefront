@@ -12,6 +12,7 @@ import {
   SheetDescription,
 } from "../ui/sheet";
 import { Button } from "../ui/Button";
+import { Checkbox } from "../ui/checkbox";
 
 export interface ProductFiltersProps {
   activeCategory: CategoryFilter;
@@ -202,15 +203,15 @@ export function ProductFilters({
             <div className="pt-4 border-t border-border-light">
               <label
                 htmlFor="filter-on-sale"
-                className="flex items-center justify-between text-[13px] text-charcoal-main font-medium"
+                className="flex items-center justify-between text-[13px] text-charcoal-main font-medium cursor-pointer"
               >
                 <span>Discounted Pieces Only (-15% to -20%)</span>
-                <input
+                <Checkbox
                   id="filter-on-sale"
-                  type="checkbox"
                   checked={onSaleOnly}
-                  onChange={(e) => onToggleSaleOnly(e.target.checked)}
-                  className="w-4 h-4 accent-[#1C1A17] rounded"
+                  onCheckedChange={(checked) =>
+                    onToggleSaleOnly(checked === true)
+                  }
                 />
               </label>
             </div>

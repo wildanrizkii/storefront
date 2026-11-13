@@ -18,6 +18,14 @@ import {
   FREE_SHIPPING_THRESHOLD,
 } from "../data/cartData.ts";
 import { PRODUCTS } from "../data/products.ts";
+import {
+  ABOUT_HERO,
+  ABOUT_TIMELINE,
+  ABOUT_PILLARS,
+  ABOUT_MAKERS,
+  ABOUT_SHOWROOMS,
+  ABOUT_METRICS,
+} from "../data/aboutData.ts";
 
 test("Landing page data matches Stitch landing export and has zero em dashes (R-02)", () => {
   assert.deepEqual(BRAND_PARTNERS, [
@@ -99,4 +107,43 @@ test("Cart Drawer default items match Stitch Cart Drawer ($3,240 across 3 items)
 
   assert.equal(subtotal, 3240);
   assert.equal(CART_CROSS_SELL_ITEMS.length, 2);
+});
+
+test("About page data has distinct editorial storytelling and zero em dashes (R-02)", () => {
+  assert.equal(ABOUT_HERO.title.includes("—"), false);
+  assert.equal(ABOUT_HERO.subtitle.includes("—"), false);
+  assert.equal(ABOUT_HERO.manifestoQuote.includes("—"), false);
+  assert.ok(ABOUT_HERO.imageUrl.length > 0);
+
+  assert.equal(ABOUT_TIMELINE.length, 4);
+  for (const t of ABOUT_TIMELINE) {
+    assert.equal(t.title.includes("—"), false);
+    assert.equal(t.description.includes("—"), false);
+  }
+
+  assert.equal(ABOUT_PILLARS.length, 4);
+  for (const p of ABOUT_PILLARS) {
+    assert.equal(p.title.includes("—"), false);
+    assert.equal(p.description.includes("—"), false);
+  }
+
+  assert.equal(ABOUT_MAKERS.length, 3);
+  for (const m of ABOUT_MAKERS) {
+    assert.equal(m.bio.includes("—"), false);
+    assert.ok(m.initials.length >= 2);
+  }
+
+  assert.equal(ABOUT_SHOWROOMS.length, 2);
+  assert.deepEqual(
+    ABOUT_SHOWROOMS.map((s) => s.city),
+    ["Copenhagen Atelier", "Portland Showroom"]
+  );
+  for (const s of ABOUT_SHOWROOMS) {
+    assert.equal(s.description.includes("—"), false);
+  }
+
+  assert.equal(ABOUT_METRICS.length, 4);
+  for (const metric of ABOUT_METRICS) {
+    assert.equal(metric.detail.includes("—"), false);
+  }
 });

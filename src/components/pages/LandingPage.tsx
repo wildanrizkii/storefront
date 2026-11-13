@@ -10,6 +10,7 @@ import {
   LANDING_TESTIMONIALS,
   STORY_IMAGES,
 } from "../../data/landingData";
+import { ParallaxSection } from "../ui/ParallaxSection";
 import { useStorefront } from "../../context/StorefrontContext";
 import {
   Dialog,
@@ -627,8 +628,14 @@ export function LandingPage() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="bg-[#161412] text-white py-20 lg:py-24">
+        {/* Testimonials Section (Parallax) */}
+        <ParallaxSection
+          bgImage={STORY_IMAGES.joinery}
+          bgAlt="Precision woodworking joinery background"
+          overlayClassName="bg-[#161412]/85"
+          className="relative bg-[#161412] text-white py-20 lg:py-24 overflow-hidden"
+          speed={5}
+        >
           <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
             <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-12 border-b border-white/10 pb-6">
               <h2 className="font-serif-display text-3xl sm:text-4xl font-normal">
@@ -685,7 +692,7 @@ export function LandingPage() {
               ))}
             </div>
           </div>
-        </section>
+        </ParallaxSection>
       </main>
 
       {/* Landing Dark Footer */}
