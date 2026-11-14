@@ -441,8 +441,8 @@ export function LandingPage() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Left Image Composition */}
-            <div className="lg:col-span-6 grid grid-cols-2 gap-4 items-stretch">
-              <div className="relative rounded-2xl overflow-hidden aspect-4/6 bg-[#ECE5DB]">
+            <div className="lg:col-span-6 grid grid-cols-2 gap-3 sm:gap-4 items-stretch">
+              <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-4/6 bg-[#ECE5DB]">
                 <img
                   src={STORY_IMAGES.craftsman}
                   alt="Craftsman working meticulously in furniture workshop"
@@ -452,8 +452,8 @@ export function LandingPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex flex-col gap-4">
-                <div className="relative rounded-2xl overflow-hidden aspect-square bg-[#ECE5DB]">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden aspect-square bg-[#ECE5DB]">
                   <img
                     src={STORY_IMAGES.joinery}
                     alt="Detailed woodwork craftsmanship joint"
@@ -463,18 +463,18 @@ export function LandingPage() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="bg-[#F2ECE1] p-6 rounded-2xl flex flex-col justify-center border border-[#E5DECF] flex-1">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#8F6232] text-white flex items-center justify-center shrink-0">
-                      <span aria-hidden="true" className="text-sm">
+                <div className="bg-[#F2ECE1] p-3.5 sm:p-5 lg:p-6 rounded-xl sm:rounded-2xl flex flex-col justify-center border border-[#E5DECF] flex-1">
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <div className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-[#8F6232] text-white flex items-center justify-center shrink-0">
+                      <span aria-hidden="true" className="text-xs sm:text-sm">
                         ★
                       </span>
                     </div>
-                    <div>
-                      <span className="text-sm font-semibold text-[#161412] block">
+                    <div className="min-w-0">
+                      <span className="text-xs sm:text-sm font-semibold text-[#161412] block leading-tight">
                         15 yrs
                       </span>
-                      <span className="text-[11px] text-[#6B655D]">
+                      <span className="text-[10px] sm:text-[11px] text-[#6B655D] leading-tight block mt-0.5">
                         Award-winning craftsmanship
                       </span>
                     </div>

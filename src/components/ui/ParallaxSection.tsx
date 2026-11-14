@@ -25,7 +25,7 @@ export function ParallaxSection({
   bgAlt,
   children,
   overlayClassName = "bg-[#161412]/80",
-  className = "relative min-h-[580px] lg:min-h-[660px] flex items-center overflow-hidden text-white",
+  className = "relative min-h-145 lg:min-h-165 flex items-center overflow-hidden text-white",
   speed = 6,
   offset = ["start end", "end start"],
   yRange,
