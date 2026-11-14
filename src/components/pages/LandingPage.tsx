@@ -74,7 +74,7 @@ export function LandingPage() {
           bgAlt="Curated luxury living room with bespoke artisan handcrafted furniture"
           ariaLabel="Timeless furniture collection hero presentation"
           overlayClassName="bg-gradient-to-b from-[#161412]/85 via-[#161412]/75 to-[#161412]/92"
-          className="relative min-h-screen flex flex-col justify-between overflow-hidden text-white"
+          className="relative min-h-svh md:min-h-screen flex flex-col justify-between overflow-hidden text-white"
           fixed={true}
           priority={true}
         >

@@ -49,7 +49,7 @@ export function ProductToolbar({
 }: ProductToolbarProps) {
   return (
     <div
-      className="sticky top-[56px] md:static z-30 bg-cream/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none -mx-4 px-4 md:mx-0 md:px-0 pt-2.5 pb-3 md:py-4 mb-4 md:mb-9 border-b border-border-light flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-2.5 md:gap-4"
+      className="sticky top-[64px] md:static z-30 bg-cream/95 md:bg-transparent backdrop-blur-md md:backdrop-blur-none -mx-4 px-4 md:mx-0 md:px-0 pt-4 pb-3 md:py-4 mb-4 md:mb-9 border-b border-border-light flex flex-col md:flex-row md:flex-wrap md:items-center md:justify-between gap-2.5 md:gap-4"
       data-purpose="catalog-controls"
     >
       {/* Left Filters & Horizontal Scrollable Category Pills */}

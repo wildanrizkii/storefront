@@ -264,3 +264,25 @@ test("Header cart and wishlist badges configure SSR hydration stability and prev
     "useWishlist.ts must initialize useState with getInitialWishlist",
   );
 });
+
+test("ProductToolbar sticky positioning aligns with 64px mobile header and provides internal top padding", () => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const toolbarPath = path.resolve(
+    __dirname,
+    "../components/products/ProductToolbar.tsx",
+  );
+  const toolbarCode = fs.readFileSync(toolbarPath, "utf-8");
+
+  assert.ok(
+    toolbarCode.includes("top-16") || toolbarCode.includes("top-[64px]"),
+    "ProductToolbar must stick at top-16 to align seamlessly with the 64px mobile header",
+  );
+  assert.ok(
+    toolbarCode.includes("pt-4"),
+    "ProductToolbar must provide pt-4 padding on mobile so filter buttons have comfortable breathing room below the navbar",
+  );
+  assert.ok(
+    toolbarCode.includes("bg-cream/95") && toolbarCode.includes("backdrop-blur-md"),
+    "ProductToolbar must preserve its backdrop blur and cream background to avoid empty gaps",
+  );
+});

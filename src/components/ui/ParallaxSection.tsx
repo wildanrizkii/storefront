@@ -68,7 +68,7 @@ export function ParallaxSection({
         className="overflow-hidden"
       >
         <section aria-label={ariaLabel} className={className}>
-          <div className="fixed inset-0 w-full h-full pointer-events-none z-0">
+          <div className="absolute md:fixed inset-0 w-full h-full pointer-events-none z-0">
             <img
               src={bgImage}
               alt={bgAlt}

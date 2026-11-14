@@ -43,6 +43,8 @@ export function Header() {
   useEffect(() => {
     if (!searchOpen) {
       searchInputRef.current?.blur();
+    } else {
+      searchInputRef.current?.focus({ preventScroll: true });
     }
   }, [searchOpen]);
 
@@ -346,7 +348,7 @@ export function Header() {
                   searchInputRef.current?.focus({ preventScroll: true });
                 }
               }}
-              className="overflow-hidden border-t border-[#ECE7DE] bg-[#FAF8F4]"
+              className="relative z-10 overflow-hidden border-t border-b border-[#DCD4C8] bg-[#FAF8F4] shadow-md"
             >
               <div className="max-w-350 mx-auto px-4 md:px-6 lg:px-12 py-3.5">
                 <form
@@ -355,7 +357,7 @@ export function Header() {
                 >
                   <label
                     htmlFor="catalog-search-input"
-                    className="text-xs font-medium text-[#161412] shrink-0"
+                    className="text-xs font-semibold text-[#161412] shrink-0 tracking-wide"
                   >
                     Search catalogue:
                   </label>
@@ -367,13 +369,13 @@ export function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search by piece name, room, or material (e.g., Oak, Linen, Lamp)..."
-                      className="w-full h-10 md:h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#DCD4C8] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15 touch-manipulation appearance-none [-webkit-appearance:none]"
+                      className="w-full h-10 md:h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#C8BFB0] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15 touch-manipulation appearance-none [-webkit-appearance:none] shadow-2xs"
                     />
                     {searchQuery && (
                       <button
                         type="button"
                         onClick={() => setSearchQuery("")}
-                        className="px-3 py-1.5 text-xs text-[#6B655D] hover:text-[#161412] rounded-full shrink-0"
+                        className="px-3 py-1.5 text-xs text-[#6B655D] hover:text-[#161412] rounded-full shrink-0 font-medium"
                       >
                         Clear
                       </button>
@@ -389,13 +391,13 @@ export function Header() {
                     )}
                   </div>
                   <div className="flex items-center gap-1.5 text-[11px] text-[#6B655D] flex-wrap shrink-0">
-                    <span>Try:</span>
+                    <span className="font-medium text-[#161412]">Try:</span>
                     {["Oak", "Linen", "Lamp", "Chair"].map((term) => (
                       <button
                         key={term}
                         type="button"
                         onClick={() => handleQuickTerm(term)}
-                        className="px-2.5 py-1 rounded-full bg-[#EFECE6] text-[#161412] hover:bg-[#E5DDD3] transition-colors"
+                        className="px-2.5 py-1 rounded-full bg-[#EFECE6] border border-[#DDD5C7] text-[#161412] hover:bg-[#E5DDD3] transition-colors font-medium"
                       >
                         {term}
                       </button>
