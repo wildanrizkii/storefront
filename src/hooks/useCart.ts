@@ -27,8 +27,26 @@ const DEFAULT_CART: CartItem[] = DEFAULT_CART_ITEMS.map((item) => ({
   drawerThumbnailUrl: item.drawerThumbnailUrl,
 }));
 
+function getInitialCart(): CartItem[] {
+  if (typeof window === "undefined") {
+    return DEFAULT_CART;
+  }
+  try {
+    const saved = window.localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+    }
+  } catch {
+    // Fallback to default in-memory cart
+  }
+  return DEFAULT_CART;
+}
+
 export function useCart() {
-  const [items, setItems] = useState<CartItem[]>(DEFAULT_CART);
+  const [items, setItems] = useState<CartItem[]>(getInitialCart);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -37,7 +55,10 @@ export function useCart() {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          setItems(parsed);
+          setItems((prev) => {
+            if (JSON.stringify(prev) === saved) return prev;
+            return parsed;
+          });
         }
       }
     } catch {

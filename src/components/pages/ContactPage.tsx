@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Newsletter } from "../layout/Newsletter";
 import { Footer } from "../layout/Footer";
 import { Input } from "../ui/input";
@@ -30,14 +29,35 @@ const SHOWROOMS = [
   },
 ];
 
+export const INQUIRY_TOPICS = [
+  {
+    value: "Swatch Request",
+    label: "Complimentary Fabric & Oak Swatch Box",
+  },
+  {
+    value: "Showroom Appointment",
+    label: "Showroom Consultation",
+  },
+  {
+    value: "Delivery & White-Glove",
+    label: "White-Glove Delivery & Lead Times",
+  },
+  {
+    value: "Trade Program",
+    label: "Trade & Interior Architecture Program",
+  },
+] as const;
+
 export function ContactPage() {
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [topic, setTopic] = useState("Swatch Request");
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
+  const selectedTopicLabel =
+    INQUIRY_TOPICS.find((t) => t.value === topic)?.label ?? topic;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -217,23 +237,18 @@ export function ContactPage() {
                       <SelectTrigger
                         id="contact-topic"
                         aria-label="Inquiry Topic"
-                        className="w-full h-auto rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-base sm:text-sm text-[#161412] focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 hover:bg-[#FAF8F4]"
+                        className="w-full min-h-11 rounded-xl bg-[#FAF8F4] border-[#E4DEC3] px-4 py-2.5 text-base sm:text-sm text-[#161412] focus:border-[#161412] focus:ring-1 focus:ring-[#161412]/15 hover:bg-[#FAF8F4]"
                       >
-                        <SelectValue placeholder="Select topic" />
+                        <SelectValue placeholder="Select topic">
+                          {selectedTopicLabel}
+                        </SelectValue>
                       </SelectTrigger>
                       <SelectContent className="bg-[#FAF8F4] border-[#E4DEC3]">
-                        <SelectItem value="Swatch Request">
-                          Complimentary Fabric &amp; Oak Swatch Box
-                        </SelectItem>
-                        <SelectItem value="Showroom Appointment">
-                          Showroom Consultation
-                        </SelectItem>
-                        <SelectItem value="Delivery & White-Glove">
-                          White-Glove Delivery &amp; Lead Times
-                        </SelectItem>
-                        <SelectItem value="Trade Program">
-                          Trade &amp; Interior Architecture Program
-                        </SelectItem>
+                        {INQUIRY_TOPICS.map((item) => (
+                          <SelectItem key={item.value} value={item.value}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </div>
@@ -271,18 +286,7 @@ export function ContactPage() {
       </main>
 
       <Newsletter />
-      <Footer
-        onSelectCategory={(cat) =>
-          router.push(
-            cat === "All" ? "/shop" : `/shop?category=${encodeURIComponent(cat)}`
-          )
-        }
-        onOpenInfoModal={(topicKey) => {
-          if (topicKey === "About") router.push("/about");
-          else if (topicKey === "Contact") router.push("/contact");
-          else router.push("/shop");
-        }}
-      />
+      <Footer />
     </div>
   );
 }

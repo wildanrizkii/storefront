@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { STORY_IMAGES } from "../../data/landingData";
 import {
@@ -18,15 +17,13 @@ import { Newsletter } from "../layout/Newsletter";
 import { Footer } from "../layout/Footer";
 
 export function AboutPage() {
-  const router = useRouter();
-
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F4] text-[#161412] font-sans antialiased">
       <main className="grow">
         {/* Editorial Hero */}
         <section
           aria-labelledby="about-hero-title"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-16 lg:pb-20 border-b border-[#ECE7DE]"
+          className="max-w-350 mx-auto px-6 lg:px-12 pt-12 pb-16 lg:pb-20 border-b border-[#ECE7DE]"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <div className="lg:col-span-7 space-y-6">
@@ -77,7 +74,7 @@ export function AboutPage() {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-[#ECE5DB] shadow-md border border-[#E4DEC3]">
+              <div className="relative rounded-3xl overflow-hidden aspect-4/5 bg-[#ECE5DB] shadow-md border border-[#E4DEC3]">
                 <img
                   src={ABOUT_HERO.imageUrl}
                   alt={ABOUT_HERO.imageAlt}
@@ -108,7 +105,7 @@ export function AboutPage() {
         {/* Studio Timeline / Journey */}
         <section
           aria-labelledby="timeline-title"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
         >
           <div className="max-w-2xl mb-12 lg:mb-16">
             <span className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] text-[#8F6232] uppercase block mb-3">
@@ -161,7 +158,7 @@ export function AboutPage() {
         {/* Craft Philosophy & Material Pillars */}
         <section
           aria-labelledby="philosophy-title"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
         >
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
             <div className="max-w-2xl">
@@ -213,7 +210,7 @@ export function AboutPage() {
         {/* Meet the Makers / Artisans */}
         <section
           aria-labelledby="makers-title"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
         >
           <div className="max-w-2xl mb-12">
             <span className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] text-[#8F6232] uppercase block mb-3">
@@ -278,7 +275,7 @@ export function AboutPage() {
         {/* Studios & Showrooms */}
         <section
           aria-labelledby="showrooms-title"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-16 lg:py-24 border-b border-[#ECE7DE]"
         >
           <div className="max-w-2xl mb-12">
             <span className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] text-[#8F6232] uppercase block mb-3">
@@ -367,10 +364,10 @@ export function AboutPage() {
           overlayClassName="bg-[#161412]/80"
           speed={6}
         >
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-24 lg:py-32">
+          <div className="max-w-350 mx-auto px-6 lg:px-12 py-24 lg:py-32">
             <div className="max-w-3xl mx-auto text-center mb-16">
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                initial={false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
@@ -395,7 +392,7 @@ export function AboutPage() {
               {ABOUT_METRICS.map((metric, idx) => (
                 <motion.div
                   key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={false}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.15 * (idx + 1) }}
@@ -417,7 +414,7 @@ export function AboutPage() {
         </ParallaxSection>
 
         {/* Editorial Closing CTA */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 py-20 lg:py-28 text-center">
+        <section className="max-w-350 mx-auto px-6 lg:px-12 py-20 lg:py-28 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
             <span className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] text-[#8F6232] uppercase block">
               EXPERIENCE LUMA &amp; LIVING
@@ -450,18 +447,7 @@ export function AboutPage() {
       </main>
 
       <Newsletter />
-      <Footer
-        onSelectCategory={(cat) =>
-          router.push(
-            cat === "All" ? "/shop" : `/shop?category=${encodeURIComponent(cat)}`
-          )
-        }
-        onOpenInfoModal={(topic) => {
-          if (topic === "About") router.push("/about");
-          else if (topic === "Contact") router.push("/contact");
-          else router.push("/shop");
-        }}
-      />
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,6 +11,7 @@ import { WishlistDrawer } from "./WishlistDrawer";
 import { AccountDrawer } from "./AccountDrawer";
 import { Input } from "../ui/input";
 import { Button } from "../ui/Button";
+import { cn } from "../../lib/utils";
 
 export function Header() {
   const router = useRouter();
@@ -74,13 +75,58 @@ export function Header() {
     }
   };
 
+  const isHome = pathname === "/";
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    if (!isHome) {
+      setIsScrolled(true);
+      return;
+    }
+
+    let rafId: number | null = null;
+    let lastScrolled = window.scrollY > 40;
+    setIsScrolled(lastScrolled);
+
+    const handleScroll = () => {
+      if (rafId !== null) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        const nowScrolled = window.scrollY > 40;
+        if (nowScrolled !== lastScrolled) {
+          lastScrolled = nowScrolled;
+          setIsScrolled(nowScrolled);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) window.cancelAnimationFrame(rafId);
+    };
+  }, [isHome]);
+
+  const isTransparent = isHome && !isScrolled && !searchOpen;
+
   return (
     <>
       <header
-        className="w-full bg-[#FAF8F4] sticky top-0 z-40"
+        className="fixed top-0 inset-x-0 z-40 w-full"
         data-purpose="site-navigation-header"
       >
-        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 h-16 md:h-20 flex items-center justify-between gap-4">
+        {/* Layered frosted backdrop that transitions opacity with zero color artifact */}
+        <div
+          aria-hidden="true"
+          className={cn(
+            "absolute inset-0 transition-opacity duration-500 ease-out pointer-events-none",
+            isTransparent
+              ? "opacity-0"
+              : "opacity-100 bg-[#FAF8F4]/90 backdrop-blur-md border-b border-[#ECE7DE] shadow-xs"
+          )}
+        />
+
+        <div className="relative z-10 max-w-350 mx-auto px-4 md:px-6 lg:px-12 h-16 md:h-20 flex items-center justify-between gap-4">
           {/* Mobile Left Hamburger Menu Trigger */}
           <div className="flex items-center md:hidden">
             <button
@@ -88,7 +134,12 @@ export function Header() {
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open mobile menu"
               aria-expanded={mobileMenuOpen}
-              className="min-w-11 min-h-11 -ml-2 inline-flex items-center justify-center text-[#161412] active:scale-95 transition-transform rounded-full"
+              className={cn(
+                "min-w-11 min-h-11 -ml-2 inline-flex items-center justify-center active:scale-95 transition-all duration-500 ease-out rounded-full",
+                isTransparent
+                  ? "text-white hover:text-[#D4A875]"
+                  : "text-[#161412] hover:bg-[#EFECE6]"
+              )}
             >
               <svg
                 aria-hidden="true"
@@ -108,10 +159,20 @@ export function Header() {
           {/* Brand Logo */}
           <Link
             href="/"
-            className="font-serif-display text-2xl font-bold tracking-tight text-[#161412] flex items-center gap-1 shrink-0 whitespace-nowrap hover:opacity-85 transition-opacity"
+            className={cn(
+              "font-serif-display text-2xl font-bold tracking-tight flex items-center gap-1 shrink-0 whitespace-nowrap hover:opacity-85 transition-colors duration-500 ease-out",
+              isTransparent ? "text-white" : "text-[#161412]"
+            )}
           >
             Luma{" "}
-            <span className="font-normal italic text-[#8F6232]">&amp;</span>{" "}
+            <span
+              className={cn(
+                "font-normal italic transition-colors duration-500 ease-out",
+                isTransparent ? "text-[#D4A875]" : "text-[#8F6232]"
+              )}
+            >
+              &amp;
+            </span>{" "}
             Living
           </Link>
 
@@ -119,11 +180,15 @@ export function Header() {
           <Navigation
             mobileMenuOpen={mobileMenuOpen}
             onCloseMobileMenu={() => setMobileMenuOpen(false)}
+            isTransparent={isTransparent}
           />
 
           {/* Utility Icons */}
           <div
-            className="flex items-center space-x-2 md:space-x-5 text-[#161412]"
+            className={cn(
+              "flex items-center space-x-2 md:space-x-5 transition-colors duration-500 ease-out",
+              isTransparent ? "text-white" : "text-[#161412]"
+            )}
             data-purpose="user-actions"
           >
             {/* Search */}
@@ -160,6 +225,7 @@ export function Header() {
               }
               aria-label={`Wishlist (${wishlistCount} saved items)`}
               aria-expanded={activeDrawer === "wishlist"}
+              suppressHydrationWarning
               className="relative min-w-11 min-h-11 md:min-w-9 md:min-h-9 inline-flex items-center justify-center hover:opacity-75 transition rounded-full"
             >
               <svg
@@ -176,14 +242,20 @@ export function Header() {
                   strokeWidth="1.8"
                 />
               </svg>
-              {wishlistCount > 0 && (
-                <span
-                  aria-hidden="true"
-                  className="absolute top-1 right-1 md:-top-0.5 md:-right-1 bg-[#8F6232] text-white text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center"
-                >
-                  {wishlistCount}
-                </span>
-              )}
+              <span
+                id="header-wishlist-badge"
+                aria-hidden="true"
+                suppressHydrationWarning
+                className={cn(
+                  "absolute top-1 right-1 md:-top-0.5 md:-right-1 text-white text-[10px] font-semibold leading-none tabular-nums select-none pointer-events-none w-4 h-4 rounded-full flex items-center justify-center transition-colors duration-500 ease-out",
+                  isTransparent
+                    ? "bg-[#D4A875] text-[#161412]"
+                    : "bg-[#8F6232] text-white",
+                  wishlistCount <= 0 && "hidden"
+                )}
+              >
+                {wishlistCount > 0 ? wishlistCount : ""}
+              </span>
             </button>
 
             {/* Account */}
@@ -220,6 +292,7 @@ export function Header() {
               }
               aria-label={`Shopping bag (${cartCount} items)`}
               aria-expanded={activeDrawer === "cart"}
+              suppressHydrationWarning
               className="relative min-w-11 min-h-11 md:min-w-9 md:min-h-9 inline-flex items-center justify-center hover:opacity-75 transition rounded-full"
             >
               <svg
@@ -236,15 +309,26 @@ export function Header() {
                   strokeWidth="1.8"
                 />
               </svg>
-              {cartCount > 0 && (
-                <span
-                  aria-hidden="true"
-                  className="absolute top-1 right-1 md:-top-0.5 md:-right-1 bg-[#161412] text-white text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center"
-                >
-                  {cartCount}
-                </span>
-              )}
+              <span
+                id="header-cart-badge"
+                aria-hidden="true"
+                suppressHydrationWarning
+                className={cn(
+                  "absolute top-1 right-1 md:-top-0.5 md:-right-1 text-[10px] font-semibold leading-none tabular-nums select-none pointer-events-none w-4 h-4 rounded-full flex items-center justify-center transition-colors duration-500 ease-out",
+                  isTransparent
+                    ? "bg-[#FAF8F4] text-[#161412]"
+                    : "bg-[#161412] text-white",
+                  cartCount <= 0 && "hidden"
+                )}
+              >
+                {cartCount > 0 ? cartCount : ""}
+              </span>
             </button>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `(function(){try{var c=localStorage.getItem("luma_living_cart_v2");if(c){var it=JSON.parse(c);var ct=Array.isArray(it)?it.reduce(function(s,i){return s+(i.quantity||1)},0):3;var b=document.getElementById("header-cart-badge");if(b){if(ct>0){b.textContent=String(ct);b.classList.remove("hidden");b.style.display="flex";}else{b.textContent="";b.classList.add("hidden");b.style.display="none";}}var btn=b?b.closest("button"):null;if(btn){btn.setAttribute("aria-label","Shopping bag ("+ct+" items)");}}var w=localStorage.getItem("luma_living_wishlist_v1");if(w){var wi=JSON.parse(w);var wt=Array.isArray(wi)?wi.length:2;var wb=document.getElementById("header-wishlist-badge");if(wb){if(wt>0){wb.textContent=String(wt);wb.classList.remove("hidden");wb.style.display="flex";}else{wb.textContent="";wb.classList.add("hidden");wb.style.display="none";}}var wbtn=wb?wb.closest("button"):null;if(wbtn){wbtn.setAttribute("aria-label","Wishlist ("+wt+" saved items)");}}}catch(e){}})();`,
+              }}
+            />
           </div>
         </div>
 
@@ -264,7 +348,7 @@ export function Header() {
               }}
               className="overflow-hidden border-t border-[#ECE7DE] bg-[#FAF8F4]"
             >
-              <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 py-3.5">
+              <div className="max-w-350 mx-auto px-4 md:px-6 lg:px-12 py-3.5">
                 <form
                   onSubmit={handleSearchSubmit}
                   className="w-full flex flex-col sm:flex-row sm:items-center gap-3"
@@ -323,6 +407,14 @@ export function Header() {
           )}
         </AnimatePresence>
       </header>
+
+      {/* Top spacer for non-home pages so page content starts below header in standard flow */}
+      {!isHome && (
+        <div
+          className="h-16 md:h-20 w-full shrink-0 select-none pointer-events-none"
+          aria-hidden="true"
+        />
+      )}
 
       {/* Slide-Out Cart Drawer */}
       <CartDrawer

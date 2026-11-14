@@ -101,7 +101,7 @@ export function CheckoutPage() {
   return (
     <div className="min-h-screen bg-[#F8F5EE] text-[#1F1B16] font-sans antialiased pb-28 lg:pb-16">
       {/* Stepper Progress Banner */}
-      <section className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 pt-6 md:pt-9 pb-5 md:pb-7">
+      <section className="max-w-350 mx-auto px-4 md:px-6 lg:px-12 pt-6 md:pt-9 pb-5 md:pb-7">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#ECE6DB] pb-6">
           <div className="flex items-baseline justify-between sm:justify-start gap-4">
             <h1 className="font-serif-display text-3xl sm:text-4xl md:text-5xl font-normal text-[#1C1917] tracking-tight">
@@ -162,7 +162,7 @@ export function CheckoutPage() {
       </section>
 
       {/* Main Content Layout Grid */}
-      <main className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12">
+      <main className="max-w-350 mx-auto px-4 md:px-6 lg:px-12">
         {/* Mobile Collapsible Order Summary Accordion (Hidden on Desktop) */}
         <section
           className="lg:hidden bg-white rounded-2xl border border-[#E9E3DA] shadow-xs overflow-hidden mb-6"

@@ -25,10 +25,13 @@
   html {
     background-color: var(--color-cream);
     color: var(--color-charcoal-main);
-    scroll-behavior: smooth;
     scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+  }
+
+  html[data-scroll-behavior="smooth"] {
+    scroll-behavior: smooth;
   }
 
   body {

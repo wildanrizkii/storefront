@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { Footer } from "../layout/Footer";
 import {
   CHECKOUT_DEFAULT_ITEMS,
   CHECKOUT_SAVED_ADDRESSES,
@@ -24,7 +25,7 @@ export function OrderConfirmationPage() {
   return (
     <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#2D2823] font-sans antialiased">
       {/* Main Content Layout */}
-      <main className="flex-grow max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 py-10 md:py-14 w-full">
+      <main className="flex-grow max-w-350 mx-auto px-4 md:px-6 lg:px-12 py-10 md:py-14 w-full">
         {/* Hero / Success Notification Banner */}
         <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">
           {/* Checkmark Ring */}
@@ -132,19 +133,17 @@ export function OrderConfirmationPage() {
                   return (
                     <div
                       key={stage.id}
-                      className={`relative group ${
-                        !isCompleted && !isActive ? "opacity-60" : ""
-                      }`}
+                      className={`relative group ${!isCompleted && !isActive ? "opacity-60" : ""
+                        }`}
                     >
                       {/* Stage Indicator Node */}
                       <div
-                        className={`absolute -left-6 sm:-left-8 top-0.5 w-5 h-5 rounded-full flex items-center justify-center ring-4 ${
-                          isCompleted
+                        className={`absolute -left-6 sm:-left-8 top-0.5 w-5 h-5 rounded-full flex items-center justify-center ring-4 ${isCompleted
                             ? "bg-[#B46D2D] text-white ring-white shadow-xs"
                             : isActive
-                            ? "bg-[#1F1B18] text-white ring-[#EAE2D7] shadow-xs"
-                            : "bg-[#E5DCD1] text-[#9A8F83] ring-white"
-                        }`}
+                              ? "bg-[#1F1B18] text-white ring-[#EAE2D7] shadow-xs"
+                              : "bg-[#E5DCD1] text-[#9A8F83] ring-white"
+                          }`}
                       >
                         {isCompleted && (
                           <svg
@@ -176,11 +175,10 @@ export function OrderConfirmationPage() {
                             {stage.title}
                           </h3>
                           <span
-                            className={`text-xs ${
-                              isActive
+                            className={`text-xs ${isActive
                                 ? "font-medium text-[#B46D2D]"
                                 : "text-[#8C8379]"
-                            }`}
+                              }`}
                           >
                             {stage.timeLabel}
                           </span>
@@ -467,34 +465,7 @@ export function OrderConfirmationPage() {
         </div>
       </main>
 
-      {/* Editorial Brand Footer */}
-      <footer className="border-t border-[#EAE3DA] bg-[#F2ECE5] mt-12 py-10">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-[#776E65]">
-          <div>
-            <span className="font-serif-display text-lg text-[#1F1B18] font-medium block">
-              Luma &amp; Living
-            </span>
-            <p className="mt-1">
-              Considered furniture and decor for calm, warm interiors.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center gap-6">
-            <Link href="/shop" className="hover:text-[#1F1B18] transition">
-              Order Status
-            </Link>
-            <Link href="/about" className="hover:text-[#1F1B18] transition">
-              White-Glove Assembly
-            </Link>
-            <Link href="/about" className="hover:text-[#1F1B18] transition">
-              Returns &amp; Care
-            </Link>
-            <Link href="/contact" className="hover:text-[#1F1B18] transition">
-              Contact Concierge
-            </Link>
-          </div>
-          <p>© 2026 Luma &amp; Living Inc. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

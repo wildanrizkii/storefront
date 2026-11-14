@@ -50,6 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${cormorant.variable} ${inter.variable} ${plusJakarta.variable}`}
     >
       <body className="antialiased bg-cream text-charcoal-main">

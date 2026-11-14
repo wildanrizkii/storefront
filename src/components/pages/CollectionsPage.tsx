@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { LANDING_CATEGORIES } from "../../data/landingData";
 import { PRODUCTS } from "../../data/products";
 import { Newsletter } from "../layout/Newsletter";
@@ -64,13 +63,11 @@ const CURATED_SERIES: CuratedSeries[] = [
 ];
 
 export function CollectionsPage() {
-  const router = useRouter();
-
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F4] text-[#161412] font-sans antialiased">
       <main className="flex-grow">
         {/* Hero Banner */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-12 pb-14 border-b border-[#ECE7DE]">
+        <section className="max-w-350 mx-auto px-6 lg:px-12 pt-12 pb-14 border-b border-[#ECE7DE]">
           <span className="text-[12px] font-semibold tracking-[0.2em] text-[#8F6232] uppercase block mb-3">
             CURATED SERIES 2026
           </span>
@@ -88,7 +85,7 @@ export function CollectionsPage() {
         </section>
 
         {/* Room Collections Grid */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16">
+        <section className="max-w-350 mx-auto px-6 lg:px-12 py-16">
           <div className="flex items-baseline justify-between mb-8 gap-4">
             <h2 className="font-serif-display text-3xl text-[#161412]">
               By{" "}
@@ -141,7 +138,7 @@ export function CollectionsPage() {
         </section>
 
         {/* Material & Architectural Series */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 pb-20 space-y-16">
+        <section className="max-w-350 mx-auto px-6 lg:px-12 pb-20 space-y-16">
           {CURATED_SERIES.map((series) => {
             const seriesProducts = series.featuredProductIds
               .map((id) => PRODUCTS.find((p) => p.id === id))
@@ -218,18 +215,7 @@ export function CollectionsPage() {
       </main>
 
       <Newsletter />
-      <Footer
-        onSelectCategory={(cat) =>
-          router.push(
-            cat === "All" ? "/shop" : `/shop?category=${encodeURIComponent(cat)}`
-          )
-        }
-        onOpenInfoModal={(topic) => {
-          if (topic === "About") router.push("/about");
-          else if (topic === "Contact") router.push("/contact");
-          else router.push("/shop");
-        }}
-      />
+      <Footer />
     </div>
   );
 }

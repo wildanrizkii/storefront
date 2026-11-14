@@ -1,6 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { MotionConfig } from "framer-motion";
 import { useWishlist } from "../hooks/useWishlist";
 import { useCart, type HydratedCartItem } from "../hooks/useCart";
@@ -67,6 +68,19 @@ export function StorefrontProvider({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const pathname = usePathname();
+  const prevPathnameRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    // Only reset scroll to top when actively navigating between routes, never on initial mount or page refresh
+    if (prevPathnameRef.current !== null && prevPathnameRef.current !== pathname) {
+      if (typeof window !== "undefined" && !window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      }
+    }
+    prevPathnameRef.current = pathname;
+  }, [pathname]);
 
   const value: StorefrontContextValue = {
     wishlistedProducts,

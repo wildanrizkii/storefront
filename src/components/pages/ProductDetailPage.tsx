@@ -10,13 +10,7 @@ import {
 } from "../../data/pdpData";
 import { useStorefront } from "../../context/StorefrontContext";
 import { Newsletter } from "../layout/Newsletter";
-import { Footer, type InfoModalKey } from "../layout/Footer";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "../ui/dialog";
+import { Footer } from "../layout/Footer";
 
 export interface ProductDetailPageProps {
   productId: string;
@@ -43,9 +37,6 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
   const [selectedSize, setSelectedSize] = useState<string>("3-seater");
   const [quantity, setQuantity] = useState<number>(1);
   const [activeTab, setActiveTab] = useState<SpecTabKey>("Description");
-  const [activeInfoModal, setActiveInfoModal] = useState<InfoModalKey | null>(
-    null
-  );
 
   const selectedColor =
     detail.colors.find((c) => c.id === selectedColorId) ?? detail.colors[2];
@@ -820,46 +811,7 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
         <Newsletter />
       </main>
 
-      <Footer
-        onSelectCategory={(cat) => router.push(`/shop?category=${cat}`)}
-        onOpenInfoModal={(topic) => setActiveInfoModal(topic)}
-      />
-
-      {/* Info Modal if triggered from header/footer */}
-      <Dialog
-        open={!!activeInfoModal}
-        onOpenChange={(open) => {
-          if (!open) setActiveInfoModal(null);
-        }}
-      >
-        {activeInfoModal && (
-          <DialogContent
-            hideCloseButton
-            className="max-w-lg p-6 space-y-4 bg-cream"
-            aria-label={activeInfoModal}
-          >
-            <div className="flex items-center justify-between pb-3 border-b border-border-light">
-              <DialogTitle className="font-serif-display text-2xl text-charcoal-main">
-                {activeInfoModal}
-              </DialogTitle>
-              <button
-                type="button"
-                onClick={() => setActiveInfoModal(null)}
-                aria-label="Close dialog"
-                className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#EFECE6]"
-              >
-                ✕
-              </button>
-            </div>
-            <DialogDescription className="text-xs text-text-muted leading-relaxed">
-              Luma &amp; Living partners with FSC-certified European oak mills,
-              Belgian linen weavers, and ceramic studios to craft heirloom
-              residential furniture. Reach our client team at
-              atelier@lumaliving.com.
-            </DialogDescription>
-          </DialogContent>
-        )}
-      </Dialog>
+      <Footer />
     </div>
   );
 }

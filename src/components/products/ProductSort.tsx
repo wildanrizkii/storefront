@@ -38,7 +38,9 @@ export function ProductSort({ sortBy, onChangeSort }: ProductSortProps) {
           aria-label={`Sort by, current selection ${currentLabel}`}
           className="h-8 border-transparent hover:border-[#DCD4C8] bg-transparent hover:bg-[#EFECE6] font-medium text-charcoal-main text-xs px-2 py-1 w-auto min-w-[130px] rounded"
         >
-          <SelectValue placeholder="Featured" />
+          <SelectValue placeholder="Featured">
+            {currentLabel}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent align="end" className="w-48 bg-[#FCFAF6] border-[#DCD4C8]">
           {SORT_OPTIONS.map((option) => (

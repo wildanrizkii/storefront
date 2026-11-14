@@ -18,11 +18,13 @@ export type { NavSectionKey };
 export interface NavigationProps {
   mobileMenuOpen: boolean;
   onCloseMobileMenu: () => void;
+  isTransparent?: boolean;
 }
 
 export function Navigation({
   mobileMenuOpen,
   onCloseMobileMenu,
+  isTransparent = false,
 }: NavigationProps) {
   const pathname = usePathname();
   const activeSection = getActiveNavSection(pathname);
@@ -83,13 +85,19 @@ export function Navigation({
               }}
               href={item.href}
               aria-current={isActive ? "page" : undefined}
-              className={`relative py-1 whitespace-nowrap transition-colors ${
+              className={`relative py-1 whitespace-nowrap transition-colors duration-500 ease-out ${
                 isActive
-                  ? "text-[#161412]"
+                  ? isTransparent
+                    ? "text-white font-medium"
+                    : "text-[#161412]"
+                  : isTransparent
+                  ? "text-white/80 hover:text-white"
                   : "text-[#6B655D] hover:text-[#161412]"
               }${
                 isActive && !indicator.ready
-                  ? " after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:bg-[#161412]"
+                  ? ` after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] ${
+                      isTransparent ? "after:bg-[#D4A875]" : "after:bg-[#161412]"
+                    }`
                   : ""
               }`}
             >
@@ -112,7 +120,9 @@ export function Navigation({
               damping: 32,
             }}
             style={{ originX: 0 }}
-            className="pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-px bg-[#161412]"
+            className={`pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-px transition-colors duration-500 ease-out ${
+              isTransparent ? "bg-[#D4A875]" : "bg-[#161412]"
+            }`}
           />
         )}
       </nav>

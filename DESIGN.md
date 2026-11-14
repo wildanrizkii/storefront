@@ -11,30 +11,30 @@
 
 ## Color System & Contrast Verification (R-25, R-29, R-31)
 
-| Token | Hex | Role | One-Line Purpose & Contrast Note |
-|---|---|---|---|
-| `--color-cream` | `#FAF8F4` | Primary page canvas | Warm linen base avoids sterile white and grounds wood/ceramic product tones. |
-| `--color-cream-header` | `#FCFAF6` | Sticky header surface | Slightly lighter warm ivory distinguishes navigation chrome from the catalog canvas. |
-| `--color-card-bg` | `#EFECE6` | Product image container | Neutral stone frame holds a 4:5 editorial ratio before and behind product photography. |
-| `--color-cream-footer` | `#F2ECE5` | Footer surface | Deeper sand tone anchors the bottom of the page below the dark newsletter band. |
-| `--color-charcoal-main` | `#211E1A` | Primary ink & headings | Warm espresso-charcoal delivers 15.54:1 contrast on `#FAF8F3` (WCAG AAA). |
-| `--color-charcoal-dark` | `#171411` | Newsletter surface & active pills | Deep kiln-charcoal creates a high-contrast break between catalog and footer. |
-| `--color-text-muted` | `#6E685F` | Secondary copy & descriptions | Warm slate-stone provides 5.21:1 contrast on `#FAF8F3` and 4.65:1 on `#F2ECE5` (WCAG AA). |
-| `--color-text-subtle` | `#696159` | Breadcrumbs, categories, counts | Refined from raw Stitch `#A39A8E` to pass WCAG AA (5.68:1 on `#FAF8F3`, 5.07:1 on `#F2ECE5`). |
-| `--color-text-on-dark-muted` | `#B8B0A6` | Newsletter supporting copy | Warm ash-sand on `#171411` yields 8.35:1 contrast (WCAG AAA). |
-| `--color-border-light` | `#DCD4C8` | Dividers & card borders | Warm stone hairline separates toolbar and footer sections without harsh black lines. |
-| `--color-sale-tag` | `#B33932` | Discount badge & mobile sale price | Deliberate terracotta-crimson accent yields 5.47:1 contrast with white text (WCAG AA). |
-| `--color-gold-accent` | `#8A6829` | Star rating glyph color | Warm aged brass accent highlights product ratings without neon saturation. |
-| `--color-badge-sand` | `#7A5C38` | Header notification counter | Warm bronze-sand badge with white text passes 5.51:1 contrast on desktop; `#211E1A` on mobile. |
+| Token                        | Hex       | Role                               | One-Line Purpose & Contrast Note                                                               |
+| ---------------------------- | --------- | ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `--color-cream`              | `#FAF8F4` | Primary page canvas                | Warm linen base avoids sterile white and grounds wood/ceramic product tones.                   |
+| `--color-cream-header`       | `#FCFAF6` | Sticky header surface              | Slightly lighter warm ivory distinguishes navigation chrome from the catalog canvas.           |
+| `--color-card-bg`            | `#EFECE6` | Product image container            | Neutral stone frame holds a 4:5 editorial ratio before and behind product photography.         |
+| `--color-cream-footer`       | `#F2ECE5` | Footer surface                     | Deeper sand tone anchors the bottom of the page below the dark newsletter band.                |
+| `--color-charcoal-main`      | `#211E1A` | Primary ink & headings             | Warm espresso-charcoal delivers 15.54:1 contrast on `#FAF8F3` (WCAG AAA).                      |
+| `--color-charcoal-dark`      | `#171411` | Newsletter surface & active pills  | Deep kiln-charcoal creates a high-contrast break between catalog and footer.                   |
+| `--color-text-muted`         | `#6E685F` | Secondary copy & descriptions      | Warm slate-stone provides 5.21:1 contrast on `#FAF8F3` and 4.65:1 on `#F2ECE5` (WCAG AA).      |
+| `--color-text-subtle`        | `#696159` | Breadcrumbs, categories, counts    | Refined from raw Stitch `#A39A8E` to pass WCAG AA (5.68:1 on `#FAF8F3`, 5.07:1 on `#F2ECE5`).  |
+| `--color-text-on-dark-muted` | `#B8B0A6` | Newsletter supporting copy         | Warm ash-sand on `#171411` yields 8.35:1 contrast (WCAG AAA).                                  |
+| `--color-border-light`       | `#DCD4C8` | Dividers & card borders            | Warm stone hairline separates toolbar and footer sections without harsh black lines.           |
+| `--color-sale-tag`           | `#B33932` | Discount badge & mobile sale price | Deliberate terracotta-crimson accent yields 5.47:1 contrast with white text (WCAG AA).         |
+| `--color-gold-accent`        | `#8A6829` | Star rating glyph color            | Warm aged brass accent highlights product ratings without neon saturation.                     |
+| `--color-badge-sand`         | `#7A5C38` | Header notification counter        | Warm bronze-sand badge with white text passes 5.51:1 contrast on desktop; `#211E1A` on mobile. |
 
 ## Typography (R-06, R-31)
 
-- **Display & Editorial Serif (`Cormorant Garamond`):** Used for brand wordmark (`26px` desktop / `23px` mobile), page title (`44px` desktop / `32px` mobile), newsletter heading (`38px` desktop / `28px` mobile), and mobile product titles (`14px`). *Reason: High-contrast humanist serif evokes print lookbooks and tactile architectural monographs.*
-- **UI & Catalog Sans (`Inter` on desktop, `Plus Jakarta Sans` on mobile):** Used for navigation (`13px`), category pills (`12px`), product metadata (`11px-14px`), and footer links (`12px`). *Reason: Neutral, open-aperture sans-serif keeps dense prices, ratings, and filter controls crisp at small sizes.*
+- **Display & Editorial Serif (`Cormorant Garamond`):** Used for brand wordmark (`26px` desktop / `23px` mobile), page title (`44px` desktop / `32px` mobile), newsletter heading (`38px` desktop / `28px` mobile), and mobile product titles (`14px`). _Reason: High-contrast humanist serif evokes print lookbooks and tactile architectural monographs._
+- **UI & Catalog Sans (`Inter` on desktop, `Plus Jakarta Sans` on mobile):** Used for navigation (`13px`), category pills (`12px`), product metadata (`11px-14px`), and footer links (`12px`). _Reason: Neutral, open-aperture sans-serif keeps dense prices, ratings, and filter controls crisp at small sizes._
 
 ## Layout, Rhythm & Responsive Reflow (R-03, R-05, R-31)
 
-- **Container:** `max-w-[1400px]` with `48px` (`lg:px-12`) horizontal padding on desktop, `24px` (`md:px-6`) on tablet, and `16px` (`px-4`) on mobile. *Reason: Gives four product columns generous breathing room on wide monitors and aligns consistently with the site header and other pages.*
+- **Container:** `max-w-350` with `48px` (`lg:px-12`) horizontal padding on desktop, `24px` (`md:px-6`) on tablet, and `16px` (`px-4`) on mobile. _Reason: Gives four product columns generous breathing room on wide monitors and aligns consistently with the site header and other pages._
 - **Section Rhythm (RHYTHM 2):**
   1. Sticky navigation bar (`80px` desktop, compact `56px` mobile with left menu trigger and centered wordmark).
   2. Editorial catalog intro (breadcrumb + serif H1 + subtitle + right-aligned result count on desktop, stacked on mobile).

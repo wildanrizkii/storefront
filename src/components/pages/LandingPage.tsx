@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
-  BRAND_PARTNERS,
   HERO_IMAGE_URL,
   LANDING_BEST_SELLERS,
   LANDING_CATEGORIES,
@@ -12,12 +12,30 @@ import {
 } from "../../data/landingData";
 import { ParallaxSection } from "../ui/ParallaxSection";
 import { useStorefront } from "../../context/StorefrontContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "../ui/dialog";
+import { Footer } from "../layout/Footer";
+
+const HERO_METRICS = [
+  {
+    value: "2.4k+",
+    label: "Happy Customers",
+    description: "Curated in bespoke homes across 40+ countries",
+  },
+  {
+    value: "340+",
+    label: "Unique Pieces",
+    description: "Limited-edition artisan production",
+  },
+  {
+    value: "15 yr",
+    label: "Artisan Heritage",
+    description: "Time-honored joinery & master craftsmanship",
+  },
+  {
+    value: "100%",
+    label: "FSC Certified",
+    description: "Responsibly harvested sustainable hardwoods",
+  },
+];
 
 type BestSellerTab =
   | "All"
@@ -26,11 +44,6 @@ type BestSellerTab =
   | "Tables"
   | "Lighting"
   | "Storage";
-
-type LegalModalKey =
-  | "Privacy Policy"
-  | "Terms of Service"
-  | "Sustainability Pledge";
 
 const BEST_SELLER_TABS: BestSellerTab[] = [
   "All",
@@ -41,49 +54,11 @@ const BEST_SELLER_TABS: BestSellerTab[] = [
   "Storage",
 ];
 
-const LEGAL_MODAL_COPY: Record<
-  LegalModalKey,
-  { title: string; body: string[] }
-> = {
-  "Privacy Policy": {
-    title: "Privacy Policy",
-    body: [
-      "Luma & Living stores your saved wishlist and cart selections locally in your browser so room planning persists across visits without requiring an account.",
-      "Email addresses shared with our studio are used solely for requested dispatches and order coordination.",
-    ],
-  },
-  "Terms of Service": {
-    title: "Terms of Service",
-    body: [
-      "Solid European oak, ash, walnut, and natural bouclé weaves exhibit subtle variations in grain and tone. Residential furniture dimensions carry a tolerance of 1 cm.",
-      "Orders over $500 include complimentary two-person white-glove delivery and a 30-day in-home trial.",
-    ],
-  },
-  "Sustainability Pledge": {
-    title: "Sustainability Pledge",
-    body: [
-      "100% of our solid hardwoods are FSC-certified and finished with zero-VOC plant-based hardwax oils.",
-      "Cushion covers and solid oak components are engineered for replacement and refinishing to extend product lifespans beyond 15 years.",
-    ],
-  },
-};
-
 export function LandingPage() {
   const { toggleWishlist, isWishlisted, addToCart, setActiveDrawer } =
     useStorefront();
 
   const [activeTab, setActiveTab] = useState<BestSellerTab>("All");
-  const [legalModal, setLegalModal] = useState<LegalModalKey | null>(null);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setLegalModal(null);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
 
   const visibleBestSellers =
     activeTab === "All"
@@ -92,114 +67,95 @@ export function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#FAF8F4] text-[#161412] font-sans antialiased">
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="max-w-[1400px] mx-auto px-6 lg:px-12 pt-10 pb-16 lg:pt-14 lg:pb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            {/* Left Content Column */}
-            <div className="lg:col-span-6 flex flex-col justify-center">
-              <span className="text-[12px] font-semibold tracking-[0.2em] text-[#8F6232] uppercase mb-4">
-                NEW COLLECTION 2026
-              </span>
-              <h1 className="font-serif-display text-5xl sm:text-6xl xl:text-7xl font-medium tracking-tight text-[#161412] leading-[1.08] mb-6">
-                Timeless
-                <br />
-                <span className="italic text-[#8F6232] font-normal">
-                  Furniture
-                </span>
-                <br />
-                for Living
-              </h1>
-              <p className="text-[#6B655D] text-base sm:text-lg max-w-md leading-relaxed mb-9">
-                Handcrafted pieces built with premium sustainable materials designed to elevate your home and endure through the years.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 mb-16">
-                <Link
-                  href="/shop"
-                  className="inline-flex items-center justify-center px-7 py-3.5 bg-[#161412] text-white rounded-full text-sm font-medium hover:bg-neutral-800 transition duration-200 min-h-[44px]"
-                >
-                  <span>Shop Collection</span>
-                  <span aria-hidden="true" className="ml-2">
-                    →
-                  </span>
-                </Link>
-                <a
-                  href="#about"
-                  className="inline-flex items-center justify-center px-7 py-3.5 border border-[#D5CFC5] text-[#161412] rounded-full text-sm font-medium hover:bg-[#EFEAE1] transition duration-200 min-h-[44px]"
-                >
-                  Our Story
-                </a>
-              </div>
-
-              {/* Stats Row */}
-              <div className="grid grid-cols-3 gap-6 pt-8 border-t border-[#ECE7DE] max-w-lg">
-                <div>
-                  <p className="font-serif-display text-3xl sm:text-4xl text-[#161412] font-normal">
-                    2.4k<span className="text-[#8F6232]">+</span>
-                  </p>
-                  <p className="text-[11px] uppercase tracking-wider text-[#6B655D] mt-1 font-medium">
-                    Happy Customers
-                  </p>
-                </div>
-                <div>
-                  <p className="font-serif-display text-3xl sm:text-4xl text-[#161412] font-normal">
-                    340<span className="text-[#8F6232]">+</span>
-                  </p>
-                  <p className="text-[11px] uppercase tracking-wider text-[#6B655D] mt-1 font-medium">
-                    Unique Pieces
-                  </p>
-                </div>
-                <div>
-                  <p className="font-serif-display text-3xl sm:text-4xl text-[#161412] font-normal">
-                    15
-                    <span className="text-sm font-sans font-normal text-[#8F6232]">
-                      yr
-                    </span>
-                  </p>
-                  <p className="text-[11px] uppercase tracking-wider text-[#6B655D] mt-1 font-medium">
-                    Craftsmanship
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Visual Lifestyle Image */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative w-full aspect-[4/3] sm:aspect-[1.15/1] rounded-3xl overflow-hidden bg-[#ECE6DC]">
-                <img
-                  src={HERO_IMAGE_URL}
-                  alt="Curated contemporary living room with deep emerald sofa"
-                  width={960}
-                  height={835}
-                  fetchPriority="high"
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Brand Partners Banner */}
-        <div className="border-y border-[#ECE7DE] py-7 bg-[#FAF8F4]/80">
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-wrap items-center justify-between gap-6 text-[#6B655D] text-xs sm:text-sm tracking-[0.25em] font-medium uppercase">
-            {BRAND_PARTNERS.map((partner, idx) => (
-              <Link
-                key={partner}
-                href="/shop"
-                className="hover:text-[#161412] transition-colors"
+      <main className="grow">
+        {/* Immersive Fixed Hero Section (Hero Reveal) */}
+        <ParallaxSection
+          bgImage={HERO_IMAGE_URL}
+          bgAlt="Curated luxury living room with bespoke artisan handcrafted furniture"
+          ariaLabel="Timeless furniture collection hero presentation"
+          overlayClassName="bg-gradient-to-b from-[#161412]/85 via-[#161412]/75 to-[#161412]/92"
+          className="relative min-h-screen flex flex-col justify-between overflow-hidden text-white"
+          fixed={true}
+          priority={true}
+        >
+          <div className="max-w-350 mx-auto px-6 lg:px-12 pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-10 lg:pb-12 w-full flex-1 flex flex-col justify-between">
+            {/* Top / Center Editorial Content */}
+            <div className="max-w-4xl mx-auto text-center my-auto py-6 sm:py-8">
+              <motion.div
+                initial={false}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
               >
-                {idx > 0 ? `• ${partner}` : partner}
-              </Link>
-            ))}
+                <span className="text-[11px] sm:text-xs tracking-[0.35em] uppercase text-[#D4A875] font-semibold mb-3 sm:mb-4 inline-block">
+                  NEW COLLECTION 2026
+                </span>
+                <h1 className="font-serif-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-normal tracking-tight leading-[1.06] mb-4 sm:mb-6">
+                  Timeless{" "}
+                  <span className="italic text-[#D4A875] font-normal">
+                    Furniture
+                  </span>
+                  <br />
+                  for Living
+                </h1>
+                <p className="text-white/85 text-base sm:text-lg lg:text-xl font-light leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-10">
+                  Handcrafted pieces built with premium sustainable materials designed to elevate your home and endure through generations.
+                </p>
+
+                {/* Action Buttons */}
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <Link
+                    href="/shop"
+                    className="inline-flex items-center justify-center px-8 py-3.5 sm:py-4 bg-[#FAF8F4] text-[#161412] hover:bg-[#D4A875] hover:text-[#161412] rounded-full text-sm font-semibold transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-0.5 min-h-12 group"
+                  >
+                    <span>Shop Collection</span>
+                    <span
+                      aria-hidden="true"
+                      className="ml-2 font-normal group-hover:translate-x-1 transition-transform"
+                    >
+                      →
+                    </span>
+                  </Link>
+                  <a
+                    href="#about"
+                    className="inline-flex items-center justify-center px-8 py-3.5 sm:py-4 border border-white/20 bg-white/5 hover:bg-white/15 text-white backdrop-blur-xs rounded-full text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 min-h-12"
+                  >
+                    Our Heritage &amp; Story
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Heritage Metrics (Blended directly into Hero, no card container, no hover) */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 pt-6 sm:pt-8 border-t border-white/15">
+              {HERO_METRICS.map((metric, idx) => (
+                <motion.div
+                  key={metric.label}
+                  initial={false}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1 * (idx + 1) }}
+                  className="space-y-1 text-left"
+                >
+                  <p className="font-serif-display text-3xl sm:text-4xl lg:text-5xl text-[#D4A875] tracking-tight font-normal">
+                    {metric.value}
+                  </p>
+                  <p className="text-sm font-medium text-white">
+                    {metric.label}
+                  </p>
+                  <p className="text-xs text-white/70 leading-relaxed">
+                    {metric.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
+        </ParallaxSection>
 
         {/* Shop by Category Section */}
         <section
           id="categories"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-20"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-20"
         >
           <div className="flex items-baseline justify-between mb-10 gap-4">
             <h2 className="font-serif-display text-3xl sm:text-4xl text-[#161412]">
@@ -239,7 +195,7 @@ export function LandingPage() {
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/75 via-black/15 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">
                   <div>
                     <h3 className="font-serif-display text-xl sm:text-2xl font-normal leading-tight">
@@ -274,7 +230,7 @@ export function LandingPage() {
         {/* Best Sellers Section */}
         <section
           id="shop"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-16"
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
             <div>
@@ -295,11 +251,10 @@ export function LandingPage() {
                     type="button"
                     onClick={() => setActiveTab(tab)}
                     aria-pressed={isActive}
-                    className={`px-5 py-2 rounded-full transition shrink-0 ${
-                      isActive
+                    className={`px-5 py-2 rounded-full transition shrink-0 ${isActive
                         ? "bg-[#161412] text-white"
                         : "bg-white border border-[#E4DEC3] text-[#6B655D] hover:text-[#161412]"
-                    }`}
+                      }`}
                   >
                     {tab}
                   </button>
@@ -359,13 +314,12 @@ export function LandingPage() {
                     <div className="relative bg-[#F3EFE8] rounded-2xl overflow-hidden aspect-[4/3.8] mb-4 flex items-center justify-center p-6">
                       {item.badge && (
                         <span
-                          className={`absolute top-4 left-4 z-10 text-white text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full ${
-                            item.badge.tone === "hot"
+                          className={`absolute top-4 left-4 z-10 text-white text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full ${item.badge.tone === "hot"
                               ? "bg-[#9E5327]"
                               : item.badge.tone === "new"
-                              ? "bg-[#161412]"
-                              : "bg-[#B24B3E]"
-                          }`}
+                                ? "bg-[#161412]"
+                                : "bg-[#B24B3E]"
+                            }`}
                         >
                           {item.badge.text}
                         </span>
@@ -483,12 +437,12 @@ export function LandingPage() {
         {/* Brand Story Section */}
         <section
           id="about"
-          className="max-w-[1400px] mx-auto px-6 lg:px-12 py-20 lg:py-28"
+          className="max-w-350 mx-auto px-6 lg:px-12 py-20 lg:py-28"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             {/* Left Image Composition */}
             <div className="lg:col-span-6 grid grid-cols-2 gap-4 items-stretch">
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/6] bg-[#ECE5DB]">
+              <div className="relative rounded-2xl overflow-hidden aspect-4/6 bg-[#ECE5DB]">
                 <img
                   src={STORY_IMAGES.craftsman}
                   alt="Craftsman working meticulously in furniture workshop"
@@ -636,7 +590,7 @@ export function LandingPage() {
           className="relative bg-[#161412] text-white py-20 lg:py-24 overflow-hidden"
           speed={5}
         >
-          <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="max-w-350 mx-auto px-6 lg:px-12">
             <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-12 border-b border-white/10 pb-6">
               <h2 className="font-serif-display text-3xl sm:text-4xl font-normal">
                 What people{" "}
@@ -695,77 +649,7 @@ export function LandingPage() {
         </ParallaxSection>
       </main>
 
-      {/* Landing Dark Footer */}
-      <footer className="bg-[#161412] text-[#B5AEA5] border-t border-white/10 py-12">
-        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="font-serif-display text-xl font-bold tracking-tight text-white flex items-center gap-1">
-            Luma{" "}
-            <span className="font-normal italic text-[#D4A875]">&amp;</span>{" "}
-            Living
-          </div>
-          <p className="text-xs text-[#B5AEA5] text-center">
-            © 2026 Luma &amp; Living Inc. All rights reserved. Crafted with sustainable Scandinavian design principles.
-          </p>
-          <div className="flex flex-wrap justify-center gap-6 text-xs text-[#D6D0C8]">
-            {(
-              [
-                "Privacy Policy",
-                "Terms of Service",
-                "Sustainability Pledge",
-              ] as LegalModalKey[]
-            ).map((key) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setLegalModal(key)}
-                className="hover:text-white transition underline-offset-4 hover:underline"
-              >
-                {key}
-              </button>
-            ))}
-          </div>
-        </div>
-      </footer>
-
-      {/* Legal / Sustainability Info Modal */}
-      <Dialog
-        open={!!legalModal}
-        onOpenChange={(open) => {
-          if (!open) setLegalModal(null);
-        }}
-      >
-        {legalModal && (
-          <DialogContent
-            hideCloseButton
-            className="w-full max-w-md bg-[#FAF8F4] border border-[#ECE7DE] rounded-2xl p-6 shadow-2xl space-y-4"
-            aria-label={LEGAL_MODAL_COPY[legalModal].title}
-          >
-            <div className="flex items-center justify-between pb-3 border-b border-[#ECE7DE]">
-              <DialogTitle className="font-serif-display text-2xl text-[#161412]">
-                {LEGAL_MODAL_COPY[legalModal].title}
-              </DialogTitle>
-              <button
-                type="button"
-                onClick={() => setLegalModal(null)}
-                aria-label="Close modal"
-                className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[#EFECE6]"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="space-y-3 text-xs text-[#6B655D] leading-relaxed">
-              <span className="sr-only">
-                <DialogDescription>
-                  {LEGAL_MODAL_COPY[legalModal].title} details
-                </DialogDescription>
-              </span>
-              {LEGAL_MODAL_COPY[legalModal].body.map((line, i) => (
-                <p key={i}>{line}</p>
-              ))}
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
+      <Footer />
     </div>
   );
 }
