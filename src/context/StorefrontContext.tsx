@@ -77,6 +77,11 @@ export function StorefrontProvider({
     if (prevPathnameRef.current !== null && prevPathnameRef.current !== pathname) {
       if (typeof window !== "undefined" && !window.location.hash) {
         window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        try {
+          if (pathname === "/") {
+            sessionStorage.setItem("luma_living_header_scrolled", "0");
+          }
+        } catch {}
       }
     }
     prevPathnameRef.current = pathname;

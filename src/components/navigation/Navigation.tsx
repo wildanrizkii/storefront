@@ -19,12 +19,14 @@ export interface NavigationProps {
   mobileMenuOpen: boolean;
   onCloseMobileMenu: () => void;
   isTransparent?: boolean;
+  mounted?: boolean;
 }
 
 export function Navigation({
   mobileMenuOpen,
   onCloseMobileMenu,
   isTransparent = false,
+  mounted = true,
 }: NavigationProps) {
   const pathname = usePathname();
   const activeSection = getActiveNavSection(pathname);
@@ -71,7 +73,9 @@ export function Navigation({
     <>
       {/* Desktop Primary Navigation */}
       <nav
+        data-header-nav
         aria-label="Primary"
+        suppressHydrationWarning
         className="hidden md:flex relative items-center gap-6 lg:gap-10 text-[14px] font-medium tracking-wide"
         data-purpose="primary-navigation"
       >
@@ -85,7 +89,10 @@ export function Navigation({
               }}
               href={item.href}
               aria-current={isActive ? "page" : undefined}
-              className={`relative py-1 whitespace-nowrap transition-colors duration-500 ease-out ${
+              suppressHydrationWarning
+              className={`relative py-1 whitespace-nowrap ${
+                mounted ? "transition-colors duration-500 ease-out " : ""
+              }${
                 isActive
                   ? isTransparent
                     ? "text-white font-medium"
@@ -96,6 +103,8 @@ export function Navigation({
               }${
                 isActive && !indicator.ready
                   ? ` after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] ${
+                      mounted ? "after:transition-colors after:duration-500 after:ease-out " : ""
+                    }${
                       isTransparent ? "after:bg-[#D4A875]" : "after:bg-[#161412]"
                     }`
                   : ""
@@ -109,6 +118,7 @@ export function Navigation({
         {indicator.ready && (
           <motion.span
             aria-hidden="true"
+            data-header-indicator
             initial={false}
             animate={{
               x: indicator.left,
@@ -120,7 +130,9 @@ export function Navigation({
               damping: 32,
             }}
             style={{ originX: 0 }}
-            className={`pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-px transition-colors duration-500 ease-out ${
+            className={`pointer-events-none absolute bottom-0 left-0 h-[1.5px] w-px ${
+              mounted ? "transition-colors duration-500 ease-out " : ""
+            }${
               isTransparent ? "bg-[#D4A875]" : "bg-[#161412]"
             }`}
           />

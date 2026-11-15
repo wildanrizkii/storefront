@@ -13,6 +13,21 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/Button";
 import { cn } from "../../lib/utils";
 
+function getInitialScrolled(isHomeRoute: boolean): boolean {
+  if (typeof window === "undefined") {
+    return !isHomeRoute;
+  }
+  if (!isHomeRoute) {
+    return true;
+  }
+  try {
+    const saved = sessionStorage.getItem("luma_living_header_scrolled");
+    if (saved === "1") return true;
+    if (saved === "0") return false;
+  } catch {}
+  return window.scrollY > 40 || document.documentElement.scrollTop > 40;
+}
+
 export function Header() {
   const router = useRouter();
   const pathname = usePathname();
@@ -78,7 +93,12 @@ export function Header() {
   };
 
   const isHome = pathname === "/";
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(() => getInitialScrolled(isHome));
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isHome) {
@@ -87,14 +107,24 @@ export function Header() {
     }
 
     let rafId: number | null = null;
-    let lastScrolled = window.scrollY > 40;
+    let lastScrolled = window.scrollY > 40 || document.documentElement.scrollTop > 40;
+    try {
+      const saved = sessionStorage.getItem("luma_living_header_scrolled");
+      if (saved === "1") {
+        lastScrolled = true;
+      }
+      sessionStorage.setItem("luma_living_header_scrolled", lastScrolled ? "1" : "0");
+    } catch {}
     setIsScrolled(lastScrolled);
 
     const handleScroll = () => {
       if (rafId !== null) return;
       rafId = window.requestAnimationFrame(() => {
         rafId = null;
-        const nowScrolled = window.scrollY > 40;
+        const nowScrolled = window.scrollY > 40 || document.documentElement.scrollTop > 40;
+        try {
+          sessionStorage.setItem("luma_living_header_scrolled", nowScrolled ? "1" : "0");
+        } catch {}
         if (nowScrolled !== lastScrolled) {
           lastScrolled = nowScrolled;
           setIsScrolled(nowScrolled);
@@ -114,14 +144,19 @@ export function Header() {
   return (
     <>
       <header
+        id="site-header"
         className="fixed top-0 inset-x-0 z-40 w-full"
         data-purpose="site-navigation-header"
+        suppressHydrationWarning
       >
         {/* Layered frosted backdrop that transitions opacity with zero color artifact */}
         <div
+          data-header-backdrop
           aria-hidden="true"
+          suppressHydrationWarning
           className={cn(
-            "absolute inset-0 transition-opacity duration-500 ease-out pointer-events-none",
+            "absolute inset-0 pointer-events-none",
+            mounted && "transition-opacity duration-500 ease-out",
             isTransparent
               ? "opacity-0"
               : "opacity-100 bg-[#FAF8F4]/90 backdrop-blur-md border-b border-[#ECE7DE] shadow-xs"
@@ -133,11 +168,14 @@ export function Header() {
           <div className="flex items-center md:hidden">
             <button
               type="button"
+              data-header-burger
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open mobile menu"
               aria-expanded={mobileMenuOpen}
+              suppressHydrationWarning
               className={cn(
-                "min-w-11 min-h-11 -ml-2 inline-flex items-center justify-center active:scale-95 transition-all duration-500 ease-out rounded-full",
+                "min-w-11 min-h-11 -ml-2 inline-flex items-center justify-center active:scale-95 rounded-full",
+                mounted && "transition-all duration-500 ease-out",
                 isTransparent
                   ? "text-white hover:text-[#D4A875]"
                   : "text-[#161412] hover:bg-[#EFECE6]"
@@ -161,15 +199,21 @@ export function Header() {
           {/* Brand Logo */}
           <Link
             href="/"
+            data-header-logo
+            suppressHydrationWarning
             className={cn(
-              "font-serif-display text-2xl font-bold tracking-tight flex items-center gap-1 shrink-0 whitespace-nowrap hover:opacity-85 transition-colors duration-500 ease-out",
+              "font-serif-display text-2xl font-bold tracking-tight flex items-center gap-1 shrink-0 whitespace-nowrap hover:opacity-85",
+              mounted && "transition-colors duration-500 ease-out",
               isTransparent ? "text-white" : "text-[#161412]"
             )}
           >
             Luma{" "}
             <span
+              data-header-ampersand
+              suppressHydrationWarning
               className={cn(
-                "font-normal italic transition-colors duration-500 ease-out",
+                "font-normal italic",
+                mounted && "transition-colors duration-500 ease-out",
                 isTransparent ? "text-[#D4A875]" : "text-[#8F6232]"
               )}
             >
@@ -183,12 +227,16 @@ export function Header() {
             mobileMenuOpen={mobileMenuOpen}
             onCloseMobileMenu={() => setMobileMenuOpen(false)}
             isTransparent={isTransparent}
+            mounted={mounted}
           />
 
           {/* Utility Icons */}
           <div
+            data-header-actions
+            suppressHydrationWarning
             className={cn(
-              "flex items-center space-x-2 md:space-x-5 transition-colors duration-500 ease-out",
+              "flex items-center space-x-2 md:space-x-5",
+              mounted && "transition-colors duration-500 ease-out",
               isTransparent ? "text-white" : "text-[#161412]"
             )}
             data-purpose="user-actions"
@@ -249,7 +297,8 @@ export function Header() {
                 aria-hidden="true"
                 suppressHydrationWarning
                 className={cn(
-                  "absolute top-1 right-1 md:-top-0.5 md:-right-1 text-white text-[10px] font-semibold leading-none tabular-nums select-none pointer-events-none w-4 h-4 rounded-full flex items-center justify-center transition-colors duration-500 ease-out",
+                  "absolute top-1 right-1 md:-top-0.5 md:-right-1 text-white text-[10px] font-semibold leading-none tabular-nums select-none pointer-events-none w-4 h-4 rounded-full flex items-center justify-center",
+                  mounted && "transition-colors duration-500 ease-out",
                   isTransparent
                     ? "bg-[#D4A875] text-[#161412]"
                     : "bg-[#8F6232] text-white",
@@ -316,7 +365,8 @@ export function Header() {
                 aria-hidden="true"
                 suppressHydrationWarning
                 className={cn(
-                  "absolute top-1 right-1 md:-top-0.5 md:-right-1 text-[10px] font-semibold leading-none tabular-nums select-none pointer-events-none w-4 h-4 rounded-full flex items-center justify-center transition-colors duration-500 ease-out",
+                  "absolute top-1 right-1 md:-top-0.5 md:-right-1 text-[10px] font-semibold leading-none tabular-nums select-none pointer-events-none w-4 h-4 rounded-full flex items-center justify-center",
+                  mounted && "transition-colors duration-500 ease-out",
                   isTransparent
                     ? "bg-[#FAF8F4] text-[#161412]"
                     : "bg-[#161412] text-white",
@@ -328,11 +378,17 @@ export function Header() {
             </button>
             <script
               dangerouslySetInnerHTML={{
-                __html: `(function(){try{var c=localStorage.getItem("luma_living_cart_v2");if(c){var it=JSON.parse(c);var ct=Array.isArray(it)?it.reduce(function(s,i){return s+(i.quantity||1)},0):3;var b=document.getElementById("header-cart-badge");if(b){if(ct>0){b.textContent=String(ct);b.classList.remove("hidden");b.style.display="flex";}else{b.textContent="";b.classList.add("hidden");b.style.display="none";}}var btn=b?b.closest("button"):null;if(btn){btn.setAttribute("aria-label","Shopping bag ("+ct+" items)");}}var w=localStorage.getItem("luma_living_wishlist_v1");if(w){var wi=JSON.parse(w);var wt=Array.isArray(wi)?wi.length:2;var wb=document.getElementById("header-wishlist-badge");if(wb){if(wt>0){wb.textContent=String(wt);wb.classList.remove("hidden");wb.style.display="flex";}else{wb.textContent="";wb.classList.add("hidden");wb.style.display="none";}}var wbtn=wb?wb.closest("button"):null;if(wbtn){wbtn.setAttribute("aria-label","Wishlist ("+wt+" saved items)");}}}catch(e){}})();`,
+                __html: `(function(){try{var c=localStorage.getItem("luma_living_cart_v2");if(c){var it=JSON.parse(c);var ct=Array.isArray(it)?it.reduce(function(s,i){return s+(i.quantity||1)},0):3;var b=document.getElementById("header-cart-badge");if(b){if(ct>0){b.textContent=String(ct);b.classList.remove("hidden");}else{b.textContent="";b.classList.add("hidden");}}var btn=b?b.closest("button"):null;if(btn){btn.setAttribute("aria-label","Shopping bag ("+ct+" items)");}}var w=localStorage.getItem("luma_living_wishlist_v1");if(w){var wi=JSON.parse(w);var wt=Array.isArray(wi)?wi.length:2;var wb=document.getElementById("header-wishlist-badge");if(wb){if(wt>0){wb.textContent=String(wt);wb.classList.remove("hidden");}else{wb.textContent="";wb.classList.add("hidden");}}var wbtn=wb?wb.closest("button"):null;if(wbtn){wbtn.setAttribute("aria-label","Wishlist ("+wt+" saved items)");}}}catch(e){}})();`,
               }}
             />
           </div>
         </div>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var isH=window.location.pathname==="/"||window.location.pathname==="";var wasScr=sessionStorage.getItem("luma_living_header_scrolled")==="1"||window.scrollY>40||document.documentElement.scrollTop>40;if(isH&&wasScr){var h=document.getElementById("site-header");if(h){var bd=h.querySelector("[data-header-backdrop]");if(bd){bd.className="absolute inset-0 pointer-events-none opacity-100 bg-[#FAF8F4]/90 backdrop-blur-md border-b border-[#ECE7DE] shadow-xs";}var lg=h.querySelector("[data-header-logo]");if(lg){lg.classList.remove("text-white");lg.classList.add("text-[#161412]");}var am=h.querySelector("[data-header-ampersand]");if(am){am.classList.remove("text-[#D4A875]");am.classList.add("text-[#8F6232]");}var nv=h.querySelector("[data-header-nav]");if(nv){var lks=nv.querySelectorAll("a");for(var i=0;i<lks.length;i++){var a=lks[i];if(a.getAttribute("aria-current")==="page"){a.classList.remove("text-white","after:bg-[#D4A875]");a.classList.add("text-[#161412]","after:bg-[#161412]");}else{a.classList.remove("text-white/80","hover:text-white");a.classList.add("text-[#6B655D]","hover:text-[#161412]");}}var ind=nv.querySelector("[data-header-indicator]");if(ind){ind.classList.remove("bg-[#D4A875]");ind.classList.add("bg-[#161412]");}}var act=h.querySelector("[data-header-actions]");if(act){act.classList.remove("text-white");act.classList.add("text-[#161412]");}var bg=h.querySelector("[data-header-burger]");if(bg){bg.classList.remove("text-white","hover:text-[#D4A875]");bg.classList.add("text-[#161412]","hover:bg-[#EFECE6]");}var wb=document.getElementById("header-wishlist-badge");if(wb){wb.classList.remove("bg-[#D4A875]","text-[#161412]");wb.classList.add("bg-[#8F6232]","text-white");}var cb=document.getElementById("header-cart-badge");if(cb){cb.classList.remove("bg-[#FAF8F4]","text-[#161412]");cb.classList.add("bg-[#161412]","text-white");}}}}catch(e){}})();`,
+          }}
+        />
 
         {/* Expandable Search Bar with smooth transition */}
         <AnimatePresence>

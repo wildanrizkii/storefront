@@ -286,3 +286,47 @@ test("ProductToolbar sticky positioning aligns with 64px mobile header and provi
     "ProductToolbar must preserve its backdrop blur and cream background to avoid empty gaps",
   );
 });
+
+test("Header and Navigation configure scroll restoration and refresh glitch stability", () => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const headerPath = path.resolve(__dirname, "../components/layout/Header.tsx");
+  const headerCode = fs.readFileSync(headerPath, "utf-8");
+
+  // 1. Header defines getInitialScrolled to prevent SSR transparent glitch on reload
+  assert.ok(
+    headerCode.includes("function getInitialScrolled"),
+    "Header.tsx must define getInitialScrolled to detect scroll position synchronously on client",
+  );
+  assert.ok(
+    headerCode.includes("useState(() => getInitialScrolled(isHome))"),
+    "Header.tsx must initialize isScrolled state with getInitialScrolled",
+  );
+
+  // 2. Header guards CSS transitions behind mounted state to eliminate reload animation flash
+  assert.ok(
+    headerCode.includes("mounted &&"),
+    "Header.tsx must gate duration-500 transitions behind mounted state to prevent refresh transition glitch",
+  );
+
+  // 3. Header includes synchronous pre-paint inline script for immediate DOM recovery
+  assert.ok(
+    headerCode.includes('id="site-header"') &&
+      headerCode.includes("dangerouslySetInnerHTML") &&
+      headerCode.includes("window.scrollY>40") &&
+      headerCode.includes('after:bg-[#161412]'),
+    "Header.tsx must include a synchronous script to update DOM classes including active menu indicator before first paint when refreshed while scrolled",
+  );
+
+  // 4. Navigation supports mounted prop and data attributes for indicator stability
+  const navPath = path.resolve(
+    __dirname,
+    "../components/navigation/Navigation.tsx",
+  );
+  const navCode = fs.readFileSync(navPath, "utf-8");
+  assert.ok(
+    navCode.includes("mounted") &&
+      navCode.includes("data-header-nav") &&
+      navCode.includes("data-header-indicator"),
+    "Navigation.tsx must support mounted prop, data-header-nav, and data-header-indicator for synchronous style stability",
+  );
+});
