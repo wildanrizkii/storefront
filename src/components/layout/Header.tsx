@@ -58,8 +58,6 @@ export function Header() {
   useEffect(() => {
     if (!searchOpen) {
       searchInputRef.current?.blur();
-    } else {
-      searchInputRef.current?.focus({ preventScroll: true });
     }
   }, [searchOpen]);
 
@@ -398,15 +396,24 @@ export function Header() {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+              transition={{
+                height: { duration: 0.28, ease: [0.16, 1, 0.3, 1] },
+                opacity: { duration: 0.2, ease: "easeOut" },
+              }}
               onAnimationComplete={() => {
                 if (searchOpen) {
                   searchInputRef.current?.focus({ preventScroll: true });
                 }
               }}
-              className="relative z-10 overflow-hidden border-t border-b border-[#DCD4C8] bg-[#FAF8F4] shadow-md"
+              className="relative z-10 overflow-hidden border-t border-b border-[#DCD4C8] bg-[#FAF8F4] shadow-md will-change-[height,opacity]"
             >
-              <div className="max-w-350 mx-auto px-4 md:px-6 lg:px-12 py-3.5">
+              <motion.div
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="max-w-350 mx-auto px-4 md:px-6 lg:px-12 py-3.5"
+              >
                 <form
                   onSubmit={handleSearchSubmit}
                   className="w-full flex flex-col sm:flex-row sm:items-center gap-3"
@@ -425,7 +432,7 @@ export function Header() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search by piece name, room, or material (e.g., Oak, Linen, Lamp)..."
-                      className="w-full h-10 md:h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#C8BFB0] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15 touch-manipulation appearance-none [-webkit-appearance:none] shadow-2xs"
+                      className="flex-1 min-w-0 h-10 md:h-9 rounded-full bg-white px-4 text-base md:text-xs placeholder:text-[#6B655D] border-[#C8BFB0] focus-visible:border-[#211E1A] focus-visible:ring-1 focus-visible:ring-[#211E1A]/15 touch-manipulation appearance-none [-webkit-appearance:none] shadow-2xs"
                     />
                     {searchQuery && (
                       <button
@@ -440,7 +447,7 @@ export function Header() {
                       <Button
                         type="submit"
                         size="sm"
-                        className="h-9 px-4 rounded-full text-xs font-medium shrink-0"
+                        className="h-10 md:h-9 px-4 rounded-full text-xs font-medium shrink-0 touch-manipulation select-none active:scale-95 transition-transform"
                       >
                         Search
                       </Button>
@@ -460,7 +467,7 @@ export function Header() {
                     ))}
                   </div>
                 </form>
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

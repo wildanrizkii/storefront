@@ -178,7 +178,7 @@ test("Next.js scroll-behavior and route scroll restoration rules are configured"
 test("Select components configure SSR stability and prevent refresh glitch", () => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  // 1. ContactPage.tsx passes selected label to SelectValue and sets min-h-[44px]
+  // 1. ContactPage.tsx passes selected label to SelectValue and sets min-h-11
   const contactPath = path.resolve(
     __dirname,
     "../components/pages/ContactPage.tsx",
@@ -194,8 +194,8 @@ test("Select components configure SSR stability and prevent refresh glitch", () 
     "ContactPage.tsx SelectValue must pass selectedTopicLabel as children to ensure SSR rendering without refresh glitch",
   );
   assert.ok(
-    contactCode.includes("min-h-[44px]"),
-    "ContactPage.tsx SelectTrigger must specify min-h-[44px] to prevent layout shift on load",
+    contactCode.includes("min-h-11"),
+    "ContactPage.tsx SelectTrigger must specify min-h-11 to prevent layout shift on load",
   );
 
   // 2. ProductSort.tsx passes currentLabel to SelectValue
@@ -282,7 +282,8 @@ test("ProductToolbar sticky positioning aligns with 64px mobile header and provi
     "ProductToolbar must provide pt-4 padding on mobile so filter buttons have comfortable breathing room below the navbar",
   );
   assert.ok(
-    toolbarCode.includes("bg-cream/95") && toolbarCode.includes("backdrop-blur-md"),
+    toolbarCode.includes("bg-cream/95") &&
+      toolbarCode.includes("backdrop-blur-md"),
     "ProductToolbar must preserve its backdrop blur and cream background to avoid empty gaps",
   );
 });
@@ -313,7 +314,7 @@ test("Header and Navigation configure scroll restoration and refresh glitch stab
     headerCode.includes('id="site-header"') &&
       headerCode.includes("dangerouslySetInnerHTML") &&
       headerCode.includes("window.scrollY>40") &&
-      headerCode.includes('after:bg-[#161412]'),
+      headerCode.includes("after:bg-[#161412]"),
     "Header.tsx must include a synchronous script to update DOM classes including active menu indicator before first paint when refreshed while scrolled",
   );
 

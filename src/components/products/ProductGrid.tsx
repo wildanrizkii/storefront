@@ -83,7 +83,7 @@ export function ProductGrid({
           <button
             type="button"
             onClick={onRetry}
-            className="px-5 py-2.5 rounded-full bg-[#1C1A17] text-white text-[12px] font-medium hover:bg-black transition-colors min-h-[44px]"
+            className="px-5 py-2.5 rounded-full bg-[#1C1A17] text-white text-[12px] font-medium hover:bg-black transition-colors min-h-11"
           >
             Reload Catalogue
           </button>
@@ -105,16 +105,15 @@ export function ProductGrid({
         </p>
         <p className="text-[13px] text-text-muted leading-relaxed">
           {searchQuery.trim()
-            ? `No items in ${
-                activeCategory === "All" ? "our collection" : activeCategory
-              } matched "${searchQuery}".`
+            ? `No items in ${activeCategory === "All" ? "our collection" : activeCategory
+            } matched "${searchQuery}".`
             : `No pieces in ${activeCategory} matched all active price or rating filters.`}
         </p>
         <div className="pt-2">
           <button
             type="button"
             onClick={onResetFilters}
-            className="px-5 py-2.5 rounded-full bg-[#1C1A17] text-white text-[12px] font-medium hover:bg-black transition-colors min-h-[44px]"
+            className="px-5 py-2.5 rounded-full bg-[#1C1A17] text-white text-[12px] font-medium hover:bg-black transition-colors min-h-11"
           >
             Reset all filters
           </button>

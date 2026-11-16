@@ -13,6 +13,9 @@ import {
 import { ParallaxSection } from "../ui/ParallaxSection";
 import { useStorefront } from "../../context/StorefrontContext";
 import { Footer } from "../layout/Footer";
+import { ProductCard } from "../products/ProductCard";
+import { PRODUCTS } from "../../data/products";
+import type { Product, ProductCategory } from "../../types/product";
 
 const HERO_METRICS = [
   {
@@ -306,128 +309,43 @@ export function LandingPage() {
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {visibleBestSellers.map((item) => {
-                const wishlisted = isWishlisted(item.productId);
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-7 sm:gap-x-6 sm:gap-y-10">
+              {visibleBestSellers.map((item, idx) => {
+                const catalogProduct = PRODUCTS.find(
+                  (p) => p.id === item.productId
+                );
+                const productItem: Product = {
+                  id: item.productId,
+                  name: item.name,
+                  category: (catalogProduct?.category ?? item.category) as ProductCategory,
+                  price: item.price,
+                  originalPrice: item.originalPrice,
+                  saleBadge: item.badge?.text ?? catalogProduct?.saleBadge,
+                  rating: catalogProduct?.rating ?? item.stars,
+                  reviewCount: catalogProduct?.reviewCount ?? (item.stars * 7 + 3),
+                  featuredOrder: catalogProduct?.featuredOrder ?? idx + 1,
+                  imageUrl: item.imageUrl,
+                  mobileImageUrl: item.imageUrl,
+                  imageAlt: item.imageAlt,
+                  description: item.subtitle,
+                  dimensions: catalogProduct?.dimensions ?? "",
+                  materials: catalogProduct?.materials ?? "",
+                };
+
                 return (
-                  <article key={item.id} className="group flex flex-col">
-                    <div className="relative bg-[#F3EFE8] rounded-2xl overflow-hidden aspect-[4/3.8] mb-4 flex items-center justify-center p-6">
-                      {item.badge && (
-                        <span
-                          className={`absolute top-4 left-4 z-10 text-white text-[10px] font-semibold tracking-wider uppercase px-2.5 py-0.5 rounded-full ${item.badge.tone === "hot"
-                              ? "bg-[#9E5327]"
-                              : item.badge.tone === "new"
-                                ? "bg-[#161412]"
-                                : "bg-[#B24B3E]"
-                            }`}
-                        >
-                          {item.badge.text}
-                        </span>
-                      )}
-
-                      <button
-                        type="button"
-                        onClick={() => toggleWishlist(item.productId)}
-                        aria-pressed={wishlisted}
-                        aria-label={
-                          wishlisted
-                            ? `Remove ${item.name} from wishlist`
-                            : `Save ${item.name} to wishlist`
-                        }
-                        className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/85 hover:bg-white flex items-center justify-center text-[#161412] transition"
-                      >
-                        <svg
-                          aria-hidden="true"
-                          className="w-4 h-4"
-                          fill={wishlisted ? "currentColor" : "none"}
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1.8"
-                          />
-                        </svg>
-                      </button>
-
-                      <Link
-                        href={`/products/${item.productId}`}
-                        className="w-full h-full flex items-center justify-center"
-                      >
-                        <img
-                          src={item.imageUrl}
-                          alt={item.imageAlt}
-                          width={520}
-                          height={490}
-                          loading="lazy"
-                          className="w-4/5 h-4/5 object-contain group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </Link>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] uppercase tracking-wider text-[#6B655D] font-medium">
-                        {item.category}
-                      </span>
-                      <div
-                        aria-label={`${item.stars} out of 5 stars`}
-                        className="flex items-center text-gold-accent text-xs"
-                      >
-                        {Array.from({ length: 5 }).map((_, idx) => (
-                          <span
-                            key={idx}
-                            className={
-                              idx < item.stars
-                                ? "text-gold-accent"
-                                : "text-neutral-300"
-                            }
-                          >
-                            ★
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <h3 className="font-serif-display text-lg text-[#161412] font-medium">
-                      <Link
-                        href={`/products/${item.productId}`}
-                        className="hover:underline"
-                      >
-                        {item.name}
-                      </Link>
-                    </h3>
-                    <p className="text-xs text-[#6B655D] line-clamp-1 mb-2">
-                      {item.subtitle}
-                    </p>
-
-                    <div className="flex items-center justify-between mt-auto">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-base font-semibold text-[#161412]">
-                          ${item.price.toLocaleString("en-US")}
-                        </span>
-                        {item.originalPrice && (
-                          <span className="text-xs text-[#6B655D] line-through">
-                            ${item.originalPrice.toLocaleString("en-US")}
-                          </span>
-                        )}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          addToCart(item.productId, 1, item.subtitle);
-                          setActiveDrawer("cart");
-                        }}
-                        aria-label={`Add ${item.name} to cart`}
-                        className="w-8 h-8 rounded-full bg-[#161412] hover:bg-[#8F6232] text-white flex items-center justify-center transition"
-                      >
-                        <span aria-hidden="true" className="text-lg leading-none">
-                          +
-                        </span>
-                      </button>
-                    </div>
-                  </article>
+                  <ProductCard
+                    key={item.id}
+                    product={productItem}
+                    index={idx}
+                    viewMode="grid"
+                    isWishlisted={isWishlisted(item.productId)}
+                    onToggleWishlist={toggleWishlist}
+                    onSelectProduct={() => {}}
+                    onAddToCart={(productId) => {
+                      addToCart(productId, 1, item.subtitle);
+                      setActiveDrawer("cart");
+                    }}
+                  />
                 );
               })}
             </div>
